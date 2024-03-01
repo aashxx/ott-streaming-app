@@ -95,6 +95,8 @@ const NavMenu = styled.div`
     display: flex;
     align-items: center;
     padding: 0 12px;
+    justify-content: center;
+    gap: 5px;
 
     img {
       height: 20px;
