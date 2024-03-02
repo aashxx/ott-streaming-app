@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { auth, provider } from "../lib/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { auth } from "../lib/firebase";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectUserName, selectUserPhoto, setSignOutState, setUserLoginDetails } from "../features/user/userSlice";
 
 const Navbar = () => {
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const username = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        setUser(user);
+        navigate('/home');
+      }
+    });
+  }, [username]);
+
   const handleAuth = async () => {
-    try {
-        const result = await signInWithPopup(provider);
-        console.log(result);
-    } catch(error) {
-        alert(error.message);
+    if(!username) {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        setUser(result.user);
+      } catch (error) {
+          console.error(error);
+      }
+    } else if(username) {
+      auth.signOut().then(() => {
+        dispatch(setSignOutState());
+        navigate('/');
+      }).catch((err) => alert(err.message));
     }
+  }
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL
+      })
+    )
   }
 
   return (
@@ -19,33 +54,48 @@ const Navbar = () => {
         <Logo>
             <img src="/images/logo.svg" alt="Disney+" />
         </Logo>
-        <NavMenu>
-        <a href="/home">
-            <img src="/images/home-icon.svg" alt="HOME" />
-            <span>HOME</span>
-        </a>
-        <a>
-            <img src="/images/search-icon.svg" alt="SEARCH" />
-            <span>SEARCH</span>
-        </a>
-        <a>
-            <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
-            <span>WATCHLIST</span>
-        </a>
-        <a>
-            <img src="/images/original-icon.svg" alt="ORIGINALS" />
-            <span>ORIGINALS</span>
-        </a>
-        <a>
-            <img src="/images/movie-icon.svg" alt="MOVIES" />
-            <span>MOVIES</span>
-        </a>
-        <a>
-            <img src="/images/series-icon.svg" alt="SERIES" />
-            <span>SERIES</span>
-        </a>
-        </NavMenu>
-        <Login onClick={handleAuth}>Login</Login>
+        {
+          !username ? (
+            <Login onClick={handleAuth}>Login</Login>
+          ) : (
+            <>
+                <NavMenu>
+                <a href="/home">
+                    <img src="/images/home-icon.svg" alt="HOME" />
+                    <span>HOME</span>
+                </a>
+                <a>
+                    <img src="/images/search-icon.svg" alt="SEARCH" />
+                    <span>SEARCH</span>
+                </a>
+                <a>
+                    <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
+                    <span>WATCHLIST</span>
+                </a>
+                <a>
+                    <img src="/images/original-icon.svg" alt="ORIGINALS" />
+                    <span>ORIGINALS</span>
+                </a>
+                <a>
+                    <img src="/images/movie-icon.svg" alt="MOVIES" />
+                    <span>MOVIES</span>
+                </a>
+                <a>
+                    <img src="/images/series-icon.svg" alt="SERIES" />
+                    <span>SERIES</span>
+                </a>
+                </NavMenu>
+                <SignOut>
+                  <UserImg src={userPhoto} alt={username} />
+                  <DropDown>
+                    <span onClick={handleAuth}>
+                      Sign Out
+                    </span>
+                  </DropDown>
+                </SignOut>
+                </>
+              )
+        }
     </Nav>
   );
 };
