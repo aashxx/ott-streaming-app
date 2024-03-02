@@ -1,11 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImgSlider from '../components/ImgSlider';
+import Viewers from '../components/Viewers';
+import Recommends from '../components/Recommends';
+import Originals from '../components/Originals';
+import NewDisney from '../components/NewDisney';
+import Trending from '../components/Trending';
 
 const Home = () => {
   return (
     <Container>
       <ImgSlider />
+      <Viewers />
+      <Recommends />
+      <Originals />
+      <NewDisney />
+      <Trending />
     </Container>
   )
 }
@@ -29,4 +39,4 @@ const Container = styled.main`
   }
 `;
 
-export default Home
+export default Home;
