@@ -52,7 +52,7 @@ const Navbar = () => {
   return (
     <Nav>
         <Logo>
-            <img src="/images/logo.svg" alt="Disney+" />
+            <img src="/images/tribesflix.png" alt="Disney+" />
         </Logo>
         {
           !username ? (
@@ -117,9 +117,9 @@ const Nav = styled.nav`
 
 const Logo = styled.a`
   padding: 0;
-  width: 80px;
+  width: 150px;
   margin-top: 4px;
-  max-height: 70px;
+  max-height: 100px;
   font-size: 0;
   display: inline-block;
 

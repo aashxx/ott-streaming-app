@@ -5,7 +5,7 @@ const Login = () => {
     <Container>
       <Content>
         <CTA>
-          <CTALogoOne src="/images/cta-logo-one.svg" alt="TribesFlix" />
+          <CTALogoOne src="/images/tribesflix.png" alt="TribesFlix" />
           <SignUp>GET ALL THERE</SignUp>
           <Description>
             Get Premier Access to Raya and the Last Dragon for an additional fee
@@ -63,8 +63,8 @@ const CTA = styled.div`
 `;
 
 const CTALogoOne = styled.img`
-  margin-bottom: 12px;
-  max-width: 600px;
+  margin: 12px auto;
+  max-width: 200px;
   min-height: 1px;
   display: block;
   width: 100%;
