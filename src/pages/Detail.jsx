@@ -3,61 +3,105 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
-
+import Popup from "reactjs-popup";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const Detail = () => {
+  const { id } = useParams();
+  const [detailData, setDetailData] = useState({});
 
-    const { id } = useParams();
-    const [detailData, setDetailData] = useState({});
+  useEffect(() => {
+    getDoc(doc(db, "movies", id))
+      .then((doc) => {
+        if (doc.exists) {
+          setDetailData(doc.data());
+        } else {
+          console.log("No such document exists");
+        }
+      })
+      .catch((err) => {
+        console.log("Error getting document:", err);
+      });
+  }, [id]);
 
-    useEffect(() => {
+  return (
+    <Container>
+      <Background>
+        <img alt={detailData.title} src={detailData.backgroundImg} />
+      </Background>
 
-        getDoc(doc(db, 'movies', id)).then((doc) => {
-            if(doc.exists) {
-                setDetailData(doc.data());
-            } else {
-                console.log("No such document exists");
-            }
-        }).catch((err) => {
-            console.log("Error getting document:", err);
-        })
-
-    }, [id]);
-
-    return (
-        <Container>
-        <Background>
-            <img alt={detailData.title} src={detailData.backgroundImg} />
-        </Background>
-
-        <ImageTitle>
-            <img alt={detailData.title} src={detailData.titleImg} />
-        </ImageTitle>
-        <ContentMeta>
-            <Controls>
-            <Player>
+      <ImageTitle>
+        <img alt={detailData.title} src={detailData.titleImg} />
+      </ImageTitle>
+      <ContentMeta>
+        <Controls>
+          <Popup
+            trigger={
+              <Player>
                 <img src="/images/play-icon-black.png" alt="" />
                 <span>Play</span>
-            </Player>
-            <Trailer>
+              </Player>
+            }
+            modal
+            nested
+          >
+            {
+              (close) => (
+                <Modal>
+                  <MenuBar>
+                    <CloseBtn onClick={() => close()}>
+                      <FaArrowCircleLeft />
+                    </CloseBtn>
+                    <Description>{detailData.title}</Description>
+                  </MenuBar>
+                  <Video controls={true}>
+                    <source src="/videos/raya.mp4" type="video/mp4" />
+                  </Video>
+                </Modal>
+              )
+            }
+          </Popup>
+          <Popup
+            trigger={
+              <Trailer>
                 <img src="/images/play-icon-white.png" alt="" />
                 <span>Trailer</span>
-            </Trailer>
-            <AddList>
-                <span />
-                <span />
-            </AddList>
-            <GroupWatch>
-                <div>
-                <img src="/images/group-icon.png" alt="" />
-                </div>
-            </GroupWatch>
-            </Controls>
-            <SubTitle>{detailData.subTitle}</SubTitle>
-            <Description>{detailData.description}</Description>
-        </ContentMeta>
-        </Container>
-    );
+              </Trailer>
+            }
+            modal
+            nested
+          >
+            {
+              (close) => (
+                <Modal>
+                  <MenuBar>
+                    <CloseBtn onClick={() => close()}>
+                      <FaArrowCircleLeft />
+                    </CloseBtn>
+                    <Description>{detailData.title} - Trailer</Description>
+                  </MenuBar>
+                  <Video controls={true}>
+                    <source src="/videos/raya.mp4" type="video/mp4" />
+                  </Video>
+                </Modal>
+              )
+            }
+          </Popup>
+          <AddList>
+            <span />
+            <span />
+          </AddList>
+          <GroupWatch>
+            <div>
+              <img src="/images/group-icon.png" alt="" />
+            </div>
+          </GroupWatch>
+        </Controls>
+        <SubTitle>{detailData.subTitle}</SubTitle>
+        <Description>{detailData.description}</Description>
+      </ContentMeta>
+    </Container>
+  );
 };
 
 const Container = styled.div`
@@ -158,6 +202,44 @@ const Trailer = styled(Player)`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgb(249, 249, 249);
   color: rgb(249, 249, 249);
+`;
+
+const Modal = styled.div`
+  width: 700px;
+  background: url("/images/home-background.png") center center / cover;
+  border-radius: 12px;
+  border: 2px solid rgb(249, 249, 249);
+  margin: auto;
+  margin-top: 30px;
+  padding: 10px;
+
+  @media (max-width: 768px) {
+    width: auto;
+    margin: auto 13px;
+  }
+`;
+
+const MenuBar = styled.div`
+  width: 100%;
+  padding: 4px 12px;
+  border-bottom: 2px solid rgb(249, 249, 249);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
+const CloseBtn = styled.button`
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgb(249, 249, 249);
+  font-size: 22px;
+`;
+
+const Video = styled.video`
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 6px;
 `;
 
 const AddList = styled.div`
