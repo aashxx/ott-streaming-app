@@ -20,6 +20,7 @@
     "react-router-dom": "^6.22.2",
     "react-slick": "^0.30.2",
     "reactjs-popup": "^2.0.6",
+    "shaka-player-react": "^1.1.5",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8"
   },

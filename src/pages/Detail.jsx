@@ -5,10 +5,13 @@ import { db } from "../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import ShakaPlayer from 'shaka-player-react';
+import 'shaka-player-react/dist/controls.css';
 
 const Detail = () => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
+
 
   useEffect(() => {
     getDoc(doc(db, "movies", id))
@@ -23,6 +26,7 @@ const Detail = () => {
         console.log("Error getting document:", err);
       });
   }, [id]);
+
 
   return (
     <Container>
@@ -54,9 +58,7 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <Video controls={true}>
-                    <source src="/videos/raya.mp4" type="video/mp4" />
-                  </Video>
+                  <ShakaPlayer autoPlay src={'https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4?alt=media&token=42e252f8-e979-42d3-b289-1d3ddee877f1'} />
                 </Modal>
               )
             }

@@ -3,7 +3,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
-const ImgSlider = (props) => {
+const ImgSlider = () => {
+  
   let settings = {
     dots: true,
     infinite: true,
@@ -12,6 +13,7 @@ const ImgSlider = (props) => {
     slidesToScroll: 1,
     autoplay: true,
   };
+
   return (
     <Carousel {...settings}>
       <Wrap>
