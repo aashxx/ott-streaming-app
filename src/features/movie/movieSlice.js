@@ -28,3 +28,34 @@ export const selectOriginal = (state) => state.movie.original;
 export const selectTrending = (state) => state.movie.trending;
 
 export default movieSlice.reducer;
+
+// import { createSlice } from "@reduxjs/toolkit";
+
+// const initialState = {
+//   newReleases: null,
+//   recommend: null,
+//   movies: null,
+//   watchlist: null
+// }
+
+// const movieSlice = createSlice({
+//   name: 'movie',
+//   initialState,
+//   reducers: {
+//     setMovies: (state, action) => {
+//       state.newReleases = action.payload.newReleases;
+//       state.recommend = action.payload.recommend;
+//       state.movies = action.payload.movies;
+//       state.watchlist = action.payload.watchlist;
+//     }
+//   }
+// });
+
+// export const { setMovies } = movieSlice.actions;
+
+// export const selectNewReleases = (state) => state.movie.selectNewReleases;
+// export const selectRecommend = (state) => state.movie.selectRecommend;
+// export const selectMovies = (state) => state.movie.selectMovies;
+// export const selectWatchlist = (state) => state.movie.selectWatchlist;
+
+// export default movieSlice.reducer;

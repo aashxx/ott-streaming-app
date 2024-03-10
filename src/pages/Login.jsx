@@ -1,16 +1,110 @@
+import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { selectUserName, setUserLoginDetails } from "../features/user/userSlice";
+import { auth, db } from "../lib/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useState } from "react";
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const username = useSelector(selectUserName);
+
+  const [manualLog, setManualLog] = useState({ email: "", password: "" });
+
+  const handleGoogleLogin = async () => {
+    if(!username) {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        setUser(result.user);
+
+        const userRef = doc(db, 'users', result.user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if(!userDoc.exists()) {
+          await setDoc(userRef, {
+            name: result.user.displayName,
+            email: result.user.email,
+            photo: result.user.photoURL,
+            createdAt: serverTimestamp()
+          });
+        }
+
+      } catch (error) {
+          console.error(error);
+      }
+    } else {
+      console.log("User already exists");
+    }
+  }
+
+  const handleManualLogin = async (event) => {
+    event.preventDefault();
+    if(!username) {
+      try {
+        const result = await signInWithEmailAndPassword(auth, manualLog.email, manualLog.password);
+        setUser(result);
+
+        const userRef = doc(db, 'users', result.user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if(!userDoc.exists()) {
+          console.log("User has to create an account first");
+        }
+
+        setManualLog({ email: "", password: "" });
+
+      } catch(err) {
+        console.error(err);
+      }
+    } else {
+      console.log("User already exists");
+    }
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        setUser(user);
+        navigate('/home');
+      }
+    });
+  }, [username]);
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL
+      })
+    );
+  }
+
   return (
     <Container>
       <Content>
         <CTA>
           <CTALogoOne src="/images/tribesflix.png" alt="TribesFlix" />
-          <SignUp>GET ALL THERE</SignUp>
+          <SignUp onClick={handleGoogleLogin}>
+            <Google src="/images/google.png" alt="G" />
+            Continue with Google
+          </SignUp>
           <Description>
-            Get Premier Access to Raya and the Last Dragon for an additional fee
-            with a Disney+ subscription. As of 03/26/21, the price of Disney+
-            and The Disney Bundle will increase by $1.
+            Or
+          </Description>
+          <form method="post" onSubmit={handleManualLogin}>
+            <Input type="email" name="email" value={manualLog.email} onChange={(event) => setManualLog({...manualLog, [event.target.name]: event.target.value})} placeholder="Email" required />
+            <Input type="password" name="password" value={manualLog.password} onChange={(event) => setManualLog({...manualLog, [event.target.name]: event.target.value})} placeholder="Password" required />
+            <SignUp type="submit">LOGIN</SignUp>
+          </form>
+          <Description>
+            Don't have an account? <Link to={'/signup'}>Sign Up</Link>
           </Description>
           <CTALogoTwo src="/images/cta-logo-two.png" alt="TribesFlix" />
         </CTA>
@@ -56,7 +150,7 @@ const BgImage = styled.div`
 `;
 
 const CTA = styled.div`
-  max-width: 650px;
+  max-width: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -70,7 +164,25 @@ const CTALogoOne = styled.img`
   width: 100%;
 `;
 
-const SignUp = styled.a`
+const Input = styled.input`
+  font-weight: bold;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 12px;
+  width: 100%;
+  letter-spacing: 1.5px;
+  font-size: 18px;
+  padding: 16.5px 10px;
+  border: 1px solid white;
+  border-radius: 4px;
+`;
+
+const Google = styled.img`
+  max-height: 25px;
+  max-width: 25px;
+`;
+
+const SignUp = styled.button`
   font-weight: bold;
   color: #f9f9f9;
   background-color: #0063e5;
@@ -81,11 +193,16 @@ const SignUp = styled.a`
   padding: 16.5px 0;
   border: 1px solid transparent;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
 
   &:hover {
     background-color: #0483ee;
   }
 `;
+
 
 const Description = styled.p`
   color: hsla(0, 0%, 95.3%, 1);

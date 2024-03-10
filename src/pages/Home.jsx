@@ -25,19 +25,19 @@ const Home = () => {
     let unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
       snapshot.docs.map(doc => {
         switch(doc.data().type) {
-          case 'recommend':
+          case 'cartoon':
             recommends = [...recommends, {id: doc.id, ...doc.data()}];
             break;
           
-          case 'new':
+          case 'sport':
             newDisney = [...newDisney, {id: doc.id, ...doc.data()}];
             break;
 
-          case 'original':
+          case 'movie':
             originals = [...originals, {id: doc.id, ...doc.data()}];
             break;
 
-          case 'trending':
+          case 'series':
             trending = [...trending, {id: doc.id, ...doc.data()}];
             break;
         }
