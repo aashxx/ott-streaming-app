@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectOriginal } from "../features/movie/movieSlice";
+import { selectWatchMovies } from "../features/movie/movieSlice";
 
-const Originals = () => {
+const WatchMovies = () => {
 
-  const movies = useSelector(selectOriginal);
+  const movies = useSelector(selectWatchMovies);
 
   return (
     <Container>
-      <h4>Originals</h4>
+      <h4>Watch Movies</h4>
       <Content>
         {
           movies && movies.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
-              <Link to={'/detail/' + movie.id}>
+              <Link to={'/category/movies/detail/' + movie.id}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>
             </Wrap>
@@ -73,4 +73,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Originals;
+export default WatchMovies;

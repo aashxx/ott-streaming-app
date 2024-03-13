@@ -1,53 +1,53 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ImgSlider from '../components/ImgSlider';
-import Viewers from '../components/Viewers';
 import Recommends from '../components/Recommends';
-import Originals from '../components/Originals';
-import NewDisney from '../components/NewDisney';
-import Trending from '../components/Trending';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../lib/firebase';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { setMovies } from '../features/movie/movieSlice';
 import { selectUserName } from '../features/user/userSlice';
+import WatchMovies from '../components/WatchMovies';
+import WatchList from '../components/WatchList';
+import NewReleases from '../components/NewReleases';
 
 const Home = () => {
 
   const dispatch = useDispatch();
   const username = useSelector(selectUserName);
-  let recommends = [];
-  let newDisney = [];
-  let originals = [];
-  let trending = [];
+  let recommend = [];
+  let newReleases = [];
+  let watchMovies = [];
+  let watchlist = [];
 
   useEffect(() => {
+
     let unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
       snapshot.docs.map(doc => {
         switch(doc.data().type) {
           case 'cartoon':
-            recommends = [...recommends, {id: doc.id, ...doc.data()}];
+            recommend = [...recommend, {id: doc.id, ...doc.data()}];
             break;
           
           case 'sport':
-            newDisney = [...newDisney, {id: doc.id, ...doc.data()}];
+            watchMovies = [...watchMovies, {id: doc.id, ...doc.data()}];
             break;
 
           case 'movie':
-            originals = [...originals, {id: doc.id, ...doc.data()}];
+            newReleases = [...newReleases, {id: doc.id, ...doc.data()}];
             break;
 
           case 'series':
-            trending = [...trending, {id: doc.id, ...doc.data()}];
+            watchlist = [...watchlist, {id: doc.id, ...doc.data()}];
             break;
         }
       });
 
       dispatch(setMovies({
-        recommend: recommends,
-        newDisney: newDisney,
-        original: originals,
-        trending: trending
+        recommend: newReleases,
+        newRelease: recommend,
+        watchMovies: watchMovies,
+        watchlist: watchlist
       }));
 
     });
@@ -59,11 +59,10 @@ const Home = () => {
   return (
     <Container>
       <ImgSlider />
-      <Viewers />
+      <NewReleases />
       <Recommends />
-      <Originals />
-      <NewDisney />
-      <Trending />
+      <WatchMovies />
+      <WatchList />
     </Container>
   )
 }

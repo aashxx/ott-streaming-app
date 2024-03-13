@@ -1,33 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const NavContent = ({ userPhoto, username, handleSignOut }) => {
   return (
     <>
       <NavMenu>
-            <a href="/home">
+            <Link to="/home">
                 <img src="/images/home-icon.svg" alt="HOME" />
                 <span>HOME</span>
-            </a>
-            <a>
-                <img src="/images/search-icon.svg" alt="SEARCH" />
-                <span>SEARCH</span>
-            </a>
-            <a>
-                <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
-                <span>WATCHLIST</span>
-            </a>
-            <a>
-                <img src="/images/original-icon.svg" alt="ORIGINALS" />
-                <span>ORIGINALS</span>
-            </a>
-            <a>
+            </Link>
+            <Link to={"/category/movies"}>
                 <img src="/images/movie-icon.svg" alt="MOVIES" />
                 <span>MOVIES</span>
-            </a>
-            <a>
+            </Link>
+            <Link to={"/category/series"}>
                 <img src="/images/series-icon.svg" alt="SERIES" />
                 <span>SERIES</span>
+            </Link>
+            <Link to={"/category/sports"}>
+                <img src="/images/original-icon.svg" alt="ORIGINALS" />
+                <span>SPORTS</span>
+            </Link>
+            <Link to={"/category/watchlist"}>
+              <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
+              <span>WATCHLIST</span>
+            </Link>
+            <a>
+              <img src="/images/search-icon.svg" alt="SEARCH" />
+                <span>SEARCH</span>
             </a>
       </NavMenu>
       <SignOut>

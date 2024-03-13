@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { auth } from "../lib/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaXmark } from "react-icons/fa6";
-import { selectUserName, selectUserPhoto, setSignOutState } from "../features/user/userSlice";
+import { selectUserName, selectUserPhoto, setSignOutState, setUserLoginDetails } from "../features/user/userSlice";
 import NavContent from "./NavContent";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Navbar = ({ openNav, setOpenNav }) => {
 
@@ -19,8 +20,26 @@ const Navbar = ({ openNav, setOpenNav }) => {
       auth.signOut().then(() => {
         dispatch(setSignOutState());
         navigate('/');
-      }).catch((err) => alert(err.message));
+      }).catch((err) => console.error(err.message));
     }
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        setUser(user);
+      }
+    });
+  }, [username]);
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL
+      })
+    );
   }
 
   return (

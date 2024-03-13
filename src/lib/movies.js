@@ -7,7 +7,7 @@ export const movies =  [
             "subTitle": "2015 • 1h 35m • Coming of Age, Family, Animation",
             "title": "Inside Out",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/5C647DF3FFBFA343CFEA84AC715148F25F9E86F398B408010CC403E7654FB908/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-01"),
+            "releaseDate": new Date("2024-01-01").toLocaleDateString(),
             "type": "movie"
         },
         {
@@ -17,7 +17,7 @@ export const movies =  [
             "subTitle": "2006 • 1h 19m • Family, Comedy, Kids",
             "title": "A tail of two kitties",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/50B933E83609BEEFEDFA177A6D96DBFA7804C14F70A0B5AB314E892E65498ACF/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-05"),
+            "releaseDate": new Date("2024-01-05").toLocaleDateString(),
             "type": "sport"
         },
         {
@@ -27,7 +27,7 @@ export const movies =  [
             "subTitle": "2018 • 7m • Family, Fantasy, Kids, Animation",
             "title": "Bao",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-02"),
+            "releaseDate": new Date("2024-01-02").toLocaleDateString(),
             "type": "movie"
         },
         {
@@ -37,8 +37,35 @@ export const movies =  [
             "subTitle": "2010 • 1h 40m • Family, Fantasy, Animation, Action-Adventure, Musical",
             "title": "Tangled",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-07"),
-            "type": "cartoon"
+            "releaseDate": new Date("2024-01-07").toLocaleDateString(),
+            "type": "series",
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Tangled",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Tangled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Tangled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/56EEBB17CC25C9FE16E334C34EF96BF7D91EC9BA3B438F88FB24E1C2AE785E03/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -47,8 +74,35 @@ export const movies =  [
             "subTitle": "2020 • 1h 49m • Family, Comedy, Fantasy, Animation, Music",
             "title": "Soul",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/E837DDE901CD036DD87A00F2D63E2F2458FAA798E62BE91F973AECCEA313A67E/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-22"),
-            "type": "series"
+            "releaseDate": new Date("2024-01-22").toLocaleDateString(),
+            "type": "series",
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Soul",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Soul",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Soul",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/AAC4808815AE5721A6AAB372DD14B8CE2E7E9EFF3A27942EF2B6B45EBF4E65CB/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -57,7 +111,7 @@ export const movies =  [
             "subTitle": "2016 • 1h 47m • Family, Fantasy, Animation, Action-Adventure, Musical",
             "title": "Moana",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/9562874BAB22B22A698368819B9EBF30FEB0291543552EB2416A5A61A73F63F4/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-21"),
+            "releaseDate": new Date("2024-01-21").toLocaleDateString(),
             "type": "cartoon"
         },
         {
@@ -67,7 +121,7 @@ export const movies =  [
             "subTitle": "2018 • 1h 58m • Science Fiction, Family, Animation, Action-Adventure",
             "title": "Incredibles 2",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/2041CE26663867FC4EF20377B8625BD629E619452E23BCDB1AB259DD475C2EA1/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-15"),
+            "releaseDate": new Date("2024-01-15").toLocaleDateString(),
             "type": "movie"
         },
         {
@@ -77,8 +131,35 @@ export const movies =  [
             "subTitle": "2021 • 1 Season • Docuseries, Anthology",
             "title": "Assembled",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/37D80C5D1AB0BA65C63588311EC60A07342F60F91D402C28B8E1137AF6A30549/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-19"),
-            "type": "series"
+            "releaseDate": new Date("2024-01-19").toLocaleDateString(),
+            "type": "series",
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Assembled",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Assembled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Assembled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/2A509165105A09F9F533E2008B143BCF38D6A5859D0EBB40CCA388772005CD94/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -87,8 +168,35 @@ export const movies =  [
             "subTitle": "2020 • 6m • Family, Animation",
             "title": "Burrow",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/DD8BBA864E290FBC03A244A488FFC8DC8365FBF2F95A122B1D57BF3772D717FD/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-30"),
-            "type": "series"
+            "releaseDate": new Date("2024-01-30").toLocaleDateString(),
+            "type": "series",
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Burrow",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Burrow",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Burrow",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/223DAE104BE1175F374C4AACAC0EB5B8B0DB9C49839AA2E10085533DDFE07A8E/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -97,7 +205,7 @@ export const movies =  [
             "subTitle": "1989 - 2019 • 31 Seasons • Comedy, Animation",
             "title": "The Simpsons",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/47A6FB38D95B3A5EF5583C9EED0B698ED2992CBA4AC7222DD3269DC92DFA03A6/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-31"),
+            "releaseDate": new Date("2024-01-31").toLocaleDateString(),
             "type": "cartoon"
         },
         {
@@ -107,8 +215,35 @@ export const movies =  [
             "subTitle": "2021 • 1 Season • Science Fiction, Fantasy, Action-Adventure",
             "title": "Legends",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/DDFF0FDF457E092EE53149CE7DB5BD14CB97E27B92D2D087E7C687B4E3073DE2/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-05"),
-            "type": "series"
+            "releaseDate": new Date("2024-01-05").toLocaleDateString(),
+            "type": "series",
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Legends",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Legends",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Legends",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //     },
+            
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/09A0617D43282F1A4FA1A97DF6159B4263A8DEB9679A007B61D5E5D6E5D0A2DD/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -117,7 +252,7 @@ export const movies =  [
             "subTitle": "2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure",
             "title": "Raya",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/E7D8EFFDD30B2A0E205DDD9929207439B21E7595709769F2A23C50457664FFB2/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-18"),
+            "releaseDate": new Date("2024-01-18").toLocaleDateString(),
             "type": "sport"
         },
         {
@@ -127,7 +262,7 @@ export const movies =  [
             "subTitle": "2018 • 7m • Family, Comedy, Animation",
             "title": "Auntie EDNA",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/A31BE6502DC7A3A01DAF58DF7E91AB6FF598A078C8FA88A1DB2D7B7E25439464/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-10"),
+            "releaseDate": new Date("2024-01-10").toLocaleDateString(),
             "type": "movie"
         },
         {
@@ -137,7 +272,7 @@ export const movies =  [
             "subTitle": "2006 - 2013 • 5 Seasons • Kids, Animation",
             "title": "Mickey mouse",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4FF3FCD567F0263430DFC33B9489CE2799AE33B50AD553DE65F03B3EA2E19828/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-20"),
+            "releaseDate": new Date("2024-01-20").toLocaleDateString(),
             "type": "cartoon"
         },
         {
@@ -147,7 +282,7 @@ export const movies =  [
             "subTitle": "2021 • 1 Season • Science Fiction, Action-Adventure, Buddy",
             "title": "The falcon and the winter soldier",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4A67A42FB16607DAE7E22266D3F00181965178ED1884047C2D982EE7D89D3554/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-25"),
+            "releaseDate": new Date("2024-01-25").toLocaleDateString(),
             "type": "sport"
         },
         {
@@ -157,7 +292,7 @@ export const movies =  [
             "subTitle": "2019 • 53m • Documentary, Biographical, Music",
             "title": "My music story",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/97BB36F8B9FC053F561894DD7B1C42C4FD20E63560F481CBCB3B9D3600CFCA3B/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-26"),
+            "releaseDate": new Date("2024-01-26").toLocaleDateString(),
             "type": "sport"
         }
     ]

@@ -2,41 +2,46 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
 
-const Detail = () => {
+const SeriesDetail = () => {
   
-  const { id } = useParams();
-  const [detailData, setDetailData] = useState({});
-
+  const { id, episodeNumber } = useParams();
+  const [episodeData, setEpisodeData] = useState({});
 
   useEffect(() => {
-    getDoc(doc(db, "movies", id))
-      .then((doc) => {
-        if (doc.exists) {
-          setDetailData(doc.data());
+    const fetchEpisode = async () => {
+      try {
+        // Query the episode document from the "episodes" subcollection
+        const episodeDocRef = doc(db, "movies", id, "episodes", episodeNumber);
+        const episodeDocSnapshot = await getDoc(episodeDocRef);
+        
+        if (episodeDocSnapshot.exists()) {
+          setEpisodeData(episodeDocSnapshot.data());
         } else {
-          console.log("No such document exists");
+          console.log("No such episode document exists");
         }
-      })
-      .catch((err) => {
-        console.log("Error getting document:", err);
-      });
-  }, [id]);
+      } catch (error) {
+        console.error("Error getting episode document:", error);
+      }
+    };
+
+    fetchEpisode();
+  }, [id, episodeNumber]);
 
 
   return (
     <Container>
       <Background>
-        <img alt={detailData.title} src={detailData.backgroundImg} />
+        <img alt={episodeData.title} src={episodeData.backgroundImg} />
       </Background>
 
       <ImageTitle>
-        <img alt={detailData.title} src={detailData.titleImg} />
+        <img alt={episodeData.title} src={episodeData.titleImg} />
       </ImageTitle>
       <ContentMeta>
         <Controls>
@@ -57,7 +62,7 @@ const Detail = () => {
                     <CloseBtn onClick={() => close()}>
                       <FaArrowCircleLeft />
                     </CloseBtn>
-                    <Description>{detailData.title}</Description>
+                    <Description>{episodeData.title}</Description>
                   </MenuBar>
                   <ShakaPlayer autoPlay src={'https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4?alt=media&token=42e252f8-e979-42d3-b289-1d3ddee877f1'} />
                 </Modal>
@@ -81,7 +86,7 @@ const Detail = () => {
                     <CloseBtn onClick={() => close()}>
                       <FaArrowCircleLeft />
                     </CloseBtn>
-                    <Description>{detailData.title} - Trailer</Description>
+                    <Description>{episodeData.title} - Trailer</Description>
                   </MenuBar>
                   <Video controls={true}>
                     <source src="/videos/raya.mp4" type="video/mp4" />
@@ -100,8 +105,8 @@ const Detail = () => {
             </div>
           </GroupWatch>
         </Controls>
-        <SubTitle>{detailData.subTitle}</SubTitle>
-        <Description>{detailData.description}</Description>
+        <SubTitle>{episodeData.duration}</SubTitle>
+        <Description>{episodeData.description}</Description>
       </ContentMeta>
     </Container>
   );
@@ -318,4 +323,4 @@ const Description = styled.div`
   }
 `;
 
-export default Detail;
+export default SeriesDetail;

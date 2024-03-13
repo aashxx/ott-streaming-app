@@ -1,33 +1,44 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectTrending } from "../features/movie/movieSlice";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
-const Trending = () => {
+const Movies = () => {
 
-  const movies = useSelector(selectTrending);
+    const [watchMovies, setWatchMovies] = useState([]);
 
-  return (
-    <Container>
-      <h4>Your Watchlist</h4>
-      <Content>
-        {
-          movies && movies.map((movie, key) => (
-            <Wrap key={key}>
-              {movie.id}
-              <Link to={'/detail/' + movie.id}>
-                <img src={movie.cardImg} alt={movie.title} />
-              </Link>
-            </Wrap>
-          ))
-        }
-      </Content>
-    </Container>
-  );
+    useEffect(() => {
+        const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
+            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
+            setWatchMovies(moviesData);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    return (
+        <Container>
+            <h4>Watch Movies</h4>
+        <Content>
+            {
+                watchMovies.map((movie, key) => (
+                    <Wrap key={key}>
+                      {movie.id}
+                      <Link to={'/category/movies/detail/' + movie.id}>
+                          <img src={movie.cardImg} alt={movie.title} />
+                      </Link>
+                    </Wrap>
+                ))
+            }
+        </Content>
+        </Container>
+    );
 };
 
 const Container = styled.div`
   padding: 0 0 26px;
+  margin: 150px 100px;
 `;
 
 const Content = styled.div`
@@ -73,4 +84,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Trending;
+export default Movies;
