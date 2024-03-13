@@ -2,31 +2,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const NavContent = ({ userPhoto, username, handleSignOut }) => {
+const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
   return (
     <>
       <NavMenu>
-            <Link to="/home">
+            <Link to="/home" onClick={() => setOpenNav(false)}>
                 <img src="/images/home-icon.svg" alt="HOME" />
                 <span>HOME</span>
             </Link>
-            <Link to={"/category/movies"}>
+            <Link to={"/category/movies"} onClick={() => setOpenNav(false)}>
                 <img src="/images/movie-icon.svg" alt="MOVIES" />
                 <span>MOVIES</span>
             </Link>
-            <Link to={"/category/series"}>
+            <Link to={"/category/series"} onClick={() => setOpenNav(false)}>
                 <img src="/images/series-icon.svg" alt="SERIES" />
                 <span>SERIES</span>
             </Link>
-            <Link to={"/category/sports"}>
+            <Link to={"/category/sports"} onClick={() => setOpenNav(false)}>
                 <img src="/images/original-icon.svg" alt="ORIGINALS" />
                 <span>SPORTS</span>
             </Link>
-            <Link to={"/watchlist"}>
+            <Link to={"/watchlist"} onClick={() => setOpenNav(false)}>
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>WATCHLIST</span>
             </Link>
-            <Link to={'/search'}>
+            <Link to={'/search'} onClick={() => setOpenNav(false)}>
               <img src="/images/search-icon.svg" alt="SEARCH" />
                 <span>SEARCH</span>
             </Link>

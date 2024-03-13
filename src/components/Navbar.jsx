@@ -53,7 +53,7 @@ const Navbar = ({ openNav, setOpenNav }) => {
         </Logo>
         {
           username ? (
-            <NavContent userPhoto={userPhoto} username={username} handleSignOut={handleSignOut} />
+            <NavContent setOpenNav={setOpenNav} userPhoto={userPhoto} username={username} handleSignOut={handleSignOut} />
           ) : (
             <Login href={'/signup'}>Signup</Login>
           )
