@@ -42,7 +42,21 @@ const Detail = () => {
   
     fetchData();
   }, [id, user, detailData.id]);
-  
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          url: window.location.href
+        });
+        console.log("URL shared successfully");
+      } catch (error) {
+        console.error("Error sharing URL:", error);
+      }
+    } else {
+      console.log("Web Share API not supported");
+    }
+  }
 
   const addToWatchList = async () => {
     if(!watchlistIcon) {
@@ -119,7 +133,7 @@ const Detail = () => {
           <AddList onClick={addToWatchList}>
             {!watchlistIcon ? (<FaPlus style={{ color: 'white', fontSize: '18px' }} />) : (<FaCheck style={{ color: 'white', fontSize: '18px' }} />)}
           </AddList>
-          <GroupWatch>
+          <GroupWatch onClick={handleShare}>
             <div>
               <FaShare />
             </div>
