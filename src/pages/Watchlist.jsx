@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { useSelector } from "react-redux";
+import { selectUID } from "../features/user/userSlice";
 
-const Movies = () => {
+const Watchlist = () => {
 
-    const [watchMovies, setWatchMovies] = useState([]);
+    const [watchlist, setWatchlist] = useState([]);
+
+    const user = useSelector(selectUID);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
-            setWatchMovies(moviesData);
+        const unsubscribe = onSnapshot(query(collection(db, "users", user, "watchlist")), (snapshot) => {
+            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+            setWatchlist(moviesData);
         });
 
         return unsubscribe;
@@ -19,10 +23,10 @@ const Movies = () => {
 
     return (
         <Container>
-            <h4>Watch Movies</h4>
+            <h4>Your Watchlist</h4>
         <Content>
             {
-                watchMovies.map((movie, key) => (
+                watchlist.map((movie, key) => (
                     <Wrap key={key}>
                       {movie.id}
                       <Link to={'/category/movies/detail/' + movie.id}>
@@ -88,4 +92,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Movies;
+export default Watchlist;

@@ -59,8 +59,12 @@ const Series = () => {
 };
 
 const Container = styled.div`
-    padding: 0 0 26px;
-    margin: 150px 100px;
+  padding: 0 0 26px;
+  margin: 100px 100px;
+
+  @media (max-width: 768px) {
+    margin: 100px 50px;
+  }
 `;
 
 const Content = styled.div`

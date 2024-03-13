@@ -2,31 +2,57 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
+import { FaPlus, FaShare, FaCheck } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { selectUID } from "../features/user/userSlice";
 
 const Detail = () => {
   
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
 
+  const [watchlistIcon, setWatchlistIcon] = useState(false);
+
+  const user = useSelector(selectUID);
+
 
   useEffect(() => {
-    getDoc(doc(db, "movies", id))
-      .then((doc) => {
-        if (doc.exists) {
-          setDetailData(doc.data());
+    const fetchData = async () => {
+      try {
+        const movieDoc = await getDoc(doc(db, "movies", id));
+        if (movieDoc.exists()) {
+          setDetailData({ id: movieDoc.id, ...movieDoc.data() });
         } else {
           console.log("No such document exists");
         }
-      })
-      .catch((err) => {
-        console.log("Error getting document:", err);
-      });
-  }, [id]);
+  
+        const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", detailData.id));
+        if (watchlistDoc.exists()) {
+          setWatchlistIcon(true);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [id, user, detailData.id]);
+  
+
+  const addToWatchList = async () => {
+    if(!watchlistIcon) {
+      setWatchlistIcon(true);
+      await setDoc(doc(collection(db, "users", user, "watchlist"), detailData.id), detailData);
+    } else {
+      setWatchlistIcon(false);
+      await deleteDoc(doc(db, "users", user, "watchlist", detailData.id));
+    }
+  }
 
 
   return (
@@ -90,13 +116,12 @@ const Detail = () => {
               )
             }
           </Popup>
-          <AddList>
-            <span />
-            <span />
+          <AddList onClick={addToWatchList}>
+            {!watchlistIcon ? (<FaPlus style={{ color: 'white', fontSize: '18px' }} />) : (<FaCheck style={{ color: 'white', fontSize: '18px' }} />)}
           </AddList>
           <GroupWatch>
             <div>
-              <img src="/images/group-icon.png" alt="" />
+              <FaShare />
             </div>
           </GroupWatch>
         </Controls>
@@ -245,7 +270,7 @@ const Video = styled.video`
   border-radius: 6px;
 `;
 
-const AddList = styled.div`
+const AddList = styled.button`
   margin-right: 16px;
   height: 44px;
   width: 44px;
@@ -290,9 +315,12 @@ const GroupWatch = styled.div`
     width: 40px;
     background: rgb(0, 0, 0);
     border-radius: 50%;
+    display: grid;
+    place-items: center;
 
-    img {
+    svg {
       width: 100%;
+      font-size: 18px;
     }
   }
 `;

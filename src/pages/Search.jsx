@@ -4,25 +4,35 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
-const Movies = () => {
+const Search = () => {
 
-    const [watchMovies, setWatchMovies] = useState([]);
+    const [searchMovies, setSearchMovies] = useState([]);
+    const [searchVal, setSearchVal] = useState("");
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
-            setWatchMovies(moviesData);
+            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+            setSearchMovies(moviesData);
         });
 
         return unsubscribe;
     }, []);
 
+    const searchMovie = (event) => {
+        const result = searchMovies.filter(movie => movie.title.toLowerCase().includes(searchVal.toLowerCase()));
+        if(event.key == "Enter") {
+            setResults(result);
+        }
+    }
+
     return (
         <Container>
-            <h4>Watch Movies</h4>
+            <h4>Search Here</h4>
+            <SearchBar type="text" value={searchVal} onChange={(e) => setSearchVal(e.target.value)} onKeyDown={searchMovie} />
         <Content>
             {
-                watchMovies.map((movie, key) => (
+                results.map((movie, key) => (
                     <Wrap key={key}>
                       {movie.id}
                       <Link to={'/category/movies/detail/' + movie.id}>
@@ -43,6 +53,16 @@ const Container = styled.div`
   @media (max-width: 768px) {
     margin: 100px 50px;
   }
+`;
+
+const SearchBar = styled.input`
+  width: 100%;
+  max-width: 650px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  margin-bottom: 50px;
 `;
 
 const Content = styled.div`
@@ -88,4 +108,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Movies;
+export default Search;

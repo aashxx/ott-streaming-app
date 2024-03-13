@@ -22,14 +22,14 @@ const NavContent = ({ userPhoto, username, handleSignOut }) => {
                 <img src="/images/original-icon.svg" alt="ORIGINALS" />
                 <span>SPORTS</span>
             </Link>
-            <Link to={"/category/watchlist"}>
+            <Link to={"/watchlist"}>
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>WATCHLIST</span>
             </Link>
-            <a>
+            <Link to={'/search'}>
               <img src="/images/search-icon.svg" alt="SEARCH" />
                 <span>SEARCH</span>
-            </a>
+            </Link>
       </NavMenu>
       <SignOut>
         <UserImg src={userPhoto} alt={username} />

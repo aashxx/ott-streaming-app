@@ -35,6 +35,7 @@ const Navbar = ({ openNav, setOpenNav }) => {
   const setUser = (user) => {
     dispatch(
       setUserLoginDetails({
+        id: user.uid,
         name: user.displayName,
         email: user.email,
         photo: user.photoURL

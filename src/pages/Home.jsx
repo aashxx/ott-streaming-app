@@ -10,6 +10,7 @@ import { selectUserName } from '../features/user/userSlice';
 import WatchMovies from '../components/WatchMovies';
 import WatchList from '../components/WatchList';
 import NewReleases from '../components/NewReleases';
+import Watchlist from './Watchlist';
 
 const Home = () => {
 
@@ -62,7 +63,7 @@ const Home = () => {
       <NewReleases />
       <Recommends />
       <WatchMovies />
-      <WatchList />
+      <Watchlist />
     </Container>
   )
 }

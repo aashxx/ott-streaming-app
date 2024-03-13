@@ -9,7 +9,8 @@ import MobileNav from './components/MobileNav';
 import Movies from './pages/Movies';
 import Series from './pages/Series';
 import SeriesDetail from './pages/SeriesDetail';
-
+import Watchlist from './pages/Watchlist';
+import Search from './pages/Search';
 
 const App = () => {
 
@@ -27,6 +28,8 @@ const App = () => {
         <Route path='/category/series/detail/:id/:episodeNumber' element={<SeriesDetail />} />
         <Route path='/category/movies' element={<Movies />} />
         <Route path='/category/series' element={<Series />} />
+        <Route path='/watchlist' element={<Watchlist />} />
+        <Route path='/search' element={<Search />} />
       </Routes>
     </Router>
   )
