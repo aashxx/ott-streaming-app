@@ -1,17 +1,22 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { collection, onSnapshot, query } from 'firebase/firestore';
+import React from 'react'
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { db } from '../lib/firebase';
+import styled from 'styled-components';
+import { useEffect } from 'react';
 
-const Movies = () => {
+const Episodes = () => {
 
-    const [watchMovies, setWatchMovies] = useState([]);
+    const params = useParams();
+    const { id } = params;
+
+    const [episodes, setEpisodes] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
-            setWatchMovies(moviesData);
+        const unsubscribe = onSnapshot(query(collection(db, "movies", id, "episodes")), (snapshot) => {
+            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+            setEpisodes(moviesData);
         });
 
         return unsubscribe;
@@ -19,10 +24,10 @@ const Movies = () => {
 
     return (
         <Container>
-            <h4>Watch Movies</h4>
+            <h4>Episodes</h4>
         <Content>
             {
-                watchMovies.map((movie, key) => (
+                episodes.map((movie, key) => (
                     <Wrap key={key}>
                       {movie.id}
                       <Link to={'/movies/detail/' + movie.id}>
@@ -34,7 +39,7 @@ const Movies = () => {
         </Content>
         </Container>
     );
-};
+}
 
 const Container = styled.div`
   padding: 0 0 26px;
@@ -88,4 +93,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default Movies;
+export default Episodes;

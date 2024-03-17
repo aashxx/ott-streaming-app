@@ -10,7 +10,7 @@ const Recommends = () => {
 
   useEffect(() => {
       const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-        const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
+        const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
         const shuffledMovies = moviesData.sort(() => Math.random() - 0.5);
         const randomMovies = shuffledMovies.slice(0, 4);
         setRecommends(randomMovies);
@@ -27,7 +27,7 @@ const Recommends = () => {
           recommends && recommends.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
-              <Link to={'/category/movies/detail/' + movie.id}>
+              <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>
             </Wrap>

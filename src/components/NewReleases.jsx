@@ -1,18 +1,16 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, limit, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 const NewReleases = () => {
 
-  // new releases done....
-
   const [newReleases, setNewReleases] = useState([]);
 
   useEffect(() => {
-      const unsubscribe = onSnapshot(query(collection(db, "movies"), orderBy("releaseDate", 'desc')), (snapshot) => {
-          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
+      const unsubscribe = onSnapshot(query(collection(db, "movies"), orderBy("releaseDate", 'desc'), limit(4)), (snapshot) => {
+          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
           setNewReleases(moviesData);
       });
 
@@ -24,19 +22,21 @@ const NewReleases = () => {
       <h4>New Releases</h4>
       <Content>
         {
-          newReleases && newReleases.map((movie, key) => (
-            <Wrap key={key}>
-              {movie.id}
-              <Link to={'/category/movies/detail/' + movie.id}>
-                <img src={movie.cardImg} alt={movie.title} />
-              </Link>
-            </Wrap>
-          ))
+          newReleases && newReleases.map((movie, key) => {
+            return (
+              <Wrap key={key}>
+                {movie.id}
+                <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
+                  <img src={movie.cardImg} alt={movie.title} />
+                </Link>
+              </Wrap>
+            );
+          })
         }
       </Content>
     </Container>
-  );
-};
+  );  
+}  
 
 const Container = styled.div`
   padding: 0 0 26px;

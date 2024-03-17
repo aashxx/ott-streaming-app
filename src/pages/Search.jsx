@@ -35,7 +35,7 @@ const Search = () => {
                 results.map((movie, key) => (
                     <Wrap key={key}>
                       {movie.id}
-                      <Link to={'/category/movies/detail/' + movie.id}>
+                      <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
                           <img src={movie.cardImg} alt={movie.title} />
                       </Link>
                     </Wrap>

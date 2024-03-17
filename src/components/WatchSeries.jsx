@@ -21,13 +21,13 @@ const WatchSeries = () => {
 
   return (
     <Container>
-      <h4>Watch Series</h4>
+      <h4>Watch Series and TV Shows</h4>
       <Content>
         {
           watchSeries && watchSeries.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
-              <Link to={'/category/movies/detail/' + movie.id}>
+              <Link to={'/series/' + movie.id}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>
             </Wrap>
@@ -56,6 +56,7 @@ const Content = styled.div`
 const Wrap = styled.div`
   padding-top: 56.25%;
   border-radius: 10px;
+  position: relative
   box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
   cursor: pointer;

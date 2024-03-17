@@ -10,15 +10,15 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
                 <img src="/images/home-icon.svg" alt="HOME" />
                 <span>HOME</span>
             </Link>
-            <Link to={"/category/movies"} onClick={() => setOpenNav(false)}>
+            <Link to={"/movies"} onClick={() => setOpenNav(false)}>
                 <img src="/images/movie-icon.svg" alt="MOVIES" />
                 <span>MOVIES</span>
             </Link>
-            <Link to={"/category/series"} onClick={() => setOpenNav(false)}>
+            <Link to={"/series"} onClick={() => setOpenNav(false)}>
                 <img src="/images/series-icon.svg" alt="SERIES" />
                 <span>SERIES</span>
             </Link>
-            <Link to={"/category/sports"} onClick={() => setOpenNav(false)}>
+            <Link to={"/sports"} onClick={() => setOpenNav(false)}>
                 <img src="/images/original-icon.svg" alt="ORIGINALS" />
                 <span>SPORTS</span>
             </Link>
