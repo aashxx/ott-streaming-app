@@ -98,6 +98,12 @@ const Detail = () => {
                     <Description>{detailData.title}</Description>
                   </MenuBar>
                   <ShakaPlayer autoPlay src={'https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4?alt=media&token=42e252f8-e979-42d3-b289-1d3ddee877f1'} />
+                  <Box>
+                    <QualitySwitch>1080p</QualitySwitch>
+                    <QualitySwitch>720p</QualitySwitch>
+                    <QualitySwitch>480p</QualitySwitch>
+                    <QualitySwitch>360p</QualitySwitch>
+                  </Box>
                 </Modal>
               )
             }
@@ -151,6 +157,29 @@ const Container = styled.div`
   display: block;
   top: 72px;
   padding: 0 calc(3.5vw + 5px);
+`;
+
+const Box = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+`;
+
+const QualitySwitch = styled.button`
+  color: #f9f9f9;
+  font-weight: bold;
+  background-color: #0063e5;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  outline: none;
+  padding: 2px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0483ee;
+  }
 `;
 
 const Background = styled.div`
