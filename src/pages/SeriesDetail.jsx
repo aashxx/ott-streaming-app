@@ -2,46 +2,59 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
+import { FaShare } from "react-icons/fa";
 
 const SeriesDetail = () => {
   
   const { id, episodeNumber } = useParams();
-  const [episodeData, setEpisodeData] = useState({});
+  const [detailData, setDetailData] = useState({});
 
   useEffect(() => {
-    const fetchEpisode = async () => {
+    const fetchData = async () => {
       try {
-        // Query the episode document from the "episodes" subcollection
-        const episodeDocRef = doc(db, "movies", id, "episodes", episodeNumber);
-        const episodeDocSnapshot = await getDoc(episodeDocRef);
-        
-        if (episodeDocSnapshot.exists()) {
-          setEpisodeData(episodeDocSnapshot.data());
+        const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeNumber));
+        if (movieDoc.exists()) {
+          setDetailData({ id: movieDoc.id, ...movieDoc.data() });
         } else {
-          console.log("No such episode document exists");
+          console.log("No such document exists");
         }
+
       } catch (error) {
-        console.error("Error getting episode document:", error);
+        console.error("Error fetching data:", error);
       }
     };
+  
+    fetchData();
+  }, [id, episodeNumber, detailData.id]);
 
-    fetchEpisode();
-  }, [id, episodeNumber]);
-
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          url: window.location.href
+        });
+        console.log("URL shared successfully");
+      } catch (error) {
+        console.error("Error sharing URL:", error);
+      }
+    } else {
+      console.log("Web Share API not supported");
+    }
+  }
 
   return (
     <Container>
       <Background>
-        <img alt={episodeData.title} src={episodeData.backgroundImg} />
+        <img alt={detailData.title} src={detailData.backgroundImg} />
       </Background>
 
       <ImageTitle>
-        <img alt={episodeData.title} src={episodeData.titleImg} />
+        <img alt={detailData.title} src={detailData.titleImg} />
       </ImageTitle>
       <ContentMeta>
         <Controls>
@@ -62,7 +75,7 @@ const SeriesDetail = () => {
                     <CloseBtn onClick={() => close()}>
                       <FaArrowCircleLeft />
                     </CloseBtn>
-                    <Description>{episodeData.title}</Description>
+                    <Description>{detailData.title}</Description>
                   </MenuBar>
                   <ShakaPlayer autoPlay src={'https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4?alt=media&token=42e252f8-e979-42d3-b289-1d3ddee877f1'} />
                 </Modal>
@@ -86,7 +99,7 @@ const SeriesDetail = () => {
                     <CloseBtn onClick={() => close()}>
                       <FaArrowCircleLeft />
                     </CloseBtn>
-                    <Description>{episodeData.title} - Trailer</Description>
+                    <Description>{detailData.title} - Trailer</Description>
                   </MenuBar>
                   <Video controls={true}>
                     <source src="/videos/raya.mp4" type="video/mp4" />
@@ -95,18 +108,14 @@ const SeriesDetail = () => {
               )
             }
           </Popup>
-          <AddList>
-            <span />
-            <span />
-          </AddList>
-          <GroupWatch>
+          <GroupWatch onClick={handleShare}>
             <div>
-              <img src="/images/group-icon.png" alt="" />
+              <FaShare />
             </div>
           </GroupWatch>
         </Controls>
-        <SubTitle>{episodeData.duration}</SubTitle>
-        <Description>{episodeData.description}</Description>
+        <SubTitle>{detailData.subTitle}</SubTitle>
+        <Description>{detailData.description}</Description>
       </ContentMeta>
     </Container>
   );
@@ -250,7 +259,7 @@ const Video = styled.video`
   border-radius: 6px;
 `;
 
-const AddList = styled.div`
+const AddList = styled.button`
   margin-right: 16px;
   height: 44px;
   width: 44px;
@@ -295,9 +304,12 @@ const GroupWatch = styled.div`
     width: 40px;
     background: rgb(0, 0, 0);
     border-radius: 50%;
+    display: grid;
+    place-items: center;
 
-    img {
+    svg {
       width: 100%;
+      font-size: 18px;
     }
   }
 `;

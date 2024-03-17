@@ -1,42 +1,79 @@
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc } from 'firebase/firestore';
 import React from 'react'
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { db } from '../lib/firebase';
 import styled from 'styled-components';
 import { useEffect } from 'react';
+import { FaPlus, FaCheck } from 'react-icons/fa';
+import { selectUID } from '../features/user/userSlice';
+import { useSelector } from 'react-redux';
 
 const Episodes = () => {
 
     const params = useParams();
     const { id } = params;
 
+    const [watchlistIcon, setWatchlistIcon] = useState(false);
+
     const [episodes, setEpisodes] = useState([]);
 
+    const user = useSelector(selectUID);
+
     useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "movies", id, "episodes")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
-            setEpisodes(moviesData);
+
+      const fetchData = async () => {
+          const unsubscribe = onSnapshot(query(collection(db, "movies", id, "episodes")), (snapshot) => {
+          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+          setEpisodes(moviesData);
         });
 
+        const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", id));
+        if (watchlistDoc.exists()) {
+          setWatchlistIcon(true);
+        }
+
         return unsubscribe;
-    }, []);
+      }
+
+      fetchData();
+
+    }, [id, user]);
+
+    const addToWatchList = async () => {
+      if(!watchlistIcon) {
+        setWatchlistIcon(true);
+        const movieDoc = await getDoc(doc(db, "movies", id));
+        console.log(movieDoc);
+        if(movieDoc.exists()) {
+          await setDoc(doc(collection(db, "users", user, "watchlist"), id), { id: movieDoc.id, ...movieDoc.data() });
+        }
+      } else {
+        setWatchlistIcon(false);
+        await deleteDoc(doc(db, "users", user, "watchlist", id));
+      }
+    }
 
     return (
         <Container>
+          <Box>
             <h4>Episodes</h4>
-        <Content>
-            {
-                episodes.map((movie, key) => (
-                    <Wrap key={key}>
-                      {movie.id}
-                      <Link to={'/movies/detail/' + movie.id}>
-                          <img src={movie.cardImg} alt={movie.title} />
-                      </Link>
-                    </Wrap>
-                ))
-            }
-        </Content>
+            <AddList onClick={addToWatchList}>
+              {!watchlistIcon ? (<FaPlus style={{ color: 'white', fontSize: '18px' }} />) : (<FaCheck style={{ color: 'white', fontSize: '18px' }} />)}
+            </AddList>
+          </Box>
+          <Content>
+              {
+                  episodes.map((movie, key) => (
+                      <Wrap key={key}>
+                        {movie.id}
+                        <Link to={`/series/detail/${id}/${movie.id}`}>
+                            <img src={movie.cardImg} alt={movie.title} />
+                        </Link>
+                      </Wrap>
+                  ))
+              }
+          </Content>
         </Container>
     );
 }
@@ -50,6 +87,12 @@ const Container = styled.div`
   }
 `;
 
+const Box = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Content = styled.div`
   display: grid;
   grid-gap: 25px;
@@ -58,6 +101,36 @@ const Content = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`;
+
+const AddList = styled.button`
+  margin-right: 16px;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+
+  span {
+    background-color: rgb(249, 249, 249);
+    display: inline-block;
+
+    &:first-child {
+      height: 2px;
+      transform: translate(1px, 0px) rotate(0deg);
+      width: 16px;
+    }
+
+    &:nth-child(2) {
+      height: 16px;
+      transform: translateX(-8px) rotate(0deg);
+      width: 2px;
+    }
   }
 `;
 

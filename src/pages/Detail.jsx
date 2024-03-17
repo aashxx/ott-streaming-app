@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
@@ -19,7 +19,6 @@ const Detail = () => {
   const [watchlistIcon, setWatchlistIcon] = useState(false);
 
   const user = useSelector(selectUID);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,7 +66,6 @@ const Detail = () => {
       await deleteDoc(doc(db, "users", user, "watchlist", detailData.id));
     }
   }
-
 
   return (
     <Container>
