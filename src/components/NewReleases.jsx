@@ -1,18 +1,30 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectNewRelease } from "../features/movie/movieSlice";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 const NewReleases = () => {
 
-  const movies = useSelector(selectNewRelease);
+  // new releases done....
+
+  const [newReleases, setNewReleases] = useState([]);
+
+  useEffect(() => {
+      const unsubscribe = onSnapshot(query(collection(db, "movies"), orderBy("releaseDate", 'desc')), (snapshot) => {
+          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
+          setNewReleases(moviesData);
+      });
+
+      return unsubscribe;
+  }, []);
 
   return (
     <Container>
       <h4>New Releases</h4>
       <Content>
         {
-          movies && movies.map((movie, key) => (
+          newReleases && newReleases.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
               <Link to={'/category/movies/detail/' + movie.id}>

@@ -1,18 +1,30 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectRecommend } from "../features/movie/movieSlice";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 const Recommends = () => {
 
-  const movies = useSelector(selectRecommend);
+  const [recommends, setRecommends] = useState([]);
+
+  useEffect(() => {
+      const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
+        const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
+        const shuffledMovies = moviesData.sort(() => Math.random() - 0.5);
+        const randomMovies = shuffledMovies.slice(0, 4);
+        setRecommends(randomMovies);
+      });
+
+      return unsubscribe;
+  }, []);
 
   return (
     <Container>
-      <h4>Recommended for You</h4>
+      <h4>Recommeded For You</h4>
       <Content>
         {
-          movies && movies.map((movie, key) => (
+          recommends && recommends.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
               <Link to={'/category/movies/detail/' + movie.id}>

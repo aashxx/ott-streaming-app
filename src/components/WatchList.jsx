@@ -1,29 +1,43 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
 import { useSelector } from "react-redux";
-import { selectWatchlist } from "../features/movie/movieSlice";
+import { selectUID } from "../features/user/userSlice";
 
 const WatchList = () => {
 
-  const movies = useSelector(selectWatchlist);
+    const [watchlist, setWatchlist] = useState([]);
 
-  return (
-    <Container>
-      <h4>Your Watchlist</h4>
-      <Content>
-        {
-          movies && movies.map((movie, key) => (
-            <Wrap key={key}>
-              {movie.id}
-              <Link to={'/category/movies/detail/' + movie.id}>
-                <img src={movie.cardImg} alt={movie.title} />
-              </Link>
-            </Wrap>
-          ))
-        }
-      </Content>
-    </Container>
-  );
+    const user = useSelector(selectUID);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(query(collection(db, "users", user, "watchlist")), (snapshot) => {
+            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+            setWatchlist(moviesData);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    return (
+        <Container>
+            <h4>Your Watchlist</h4>
+        <Content>
+            {
+                watchlist.map((movie, key) => (
+                    <Wrap key={key}>
+                      {movie.id}
+                      <Link to={'/category/movies/detail/' + movie.id}>
+                          <img src={movie.cardImg} alt={movie.title} />
+                      </Link>
+                    </Wrap>
+                ))
+            }
+        </Content>
+        </Container>
+    );
 };
 
 const Container = styled.div`

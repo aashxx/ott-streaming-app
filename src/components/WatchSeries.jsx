@@ -1,18 +1,30 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectWatchMovies } from "../features/movie/movieSlice";
+import { useEffect, useState } from "react";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
-const WatchMovies = () => {
+const WatchSeries = () => {
 
-  const movies = useSelector(selectWatchMovies);
+  const [watchSeries, setWatchSeries] = useState([]);
+
+  useEffect(() => {
+      const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
+          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'series');
+          const shuffledMovies = moviesData.sort(() => Math.random() - 0.5);
+          const randomMovies = shuffledMovies.slice(0, 4);
+          setWatchSeries(randomMovies);
+      });
+
+      return unsubscribe;
+  }, []);
 
   return (
     <Container>
-      <h4>Watch Movies</h4>
+      <h4>Watch Series</h4>
       <Content>
         {
-          movies && movies.map((movie, key) => (
+          watchSeries && watchSeries.map((movie, key) => (
             <Wrap key={key}>
               {movie.id}
               <Link to={'/category/movies/detail/' + movie.id}>
@@ -73,4 +85,4 @@ const Wrap = styled.div`
   }
 `;
 
-export default WatchMovies;
+export default WatchSeries;
