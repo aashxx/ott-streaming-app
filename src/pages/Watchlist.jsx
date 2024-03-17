@@ -25,16 +25,20 @@ const Watchlist = () => {
         <Container>
             <h4>Your Watchlist</h4>
         <Content>
-            {
+          {
+            watchlist.length === 0 ? (
+              <Info>No movies added</Info>
+            ) : (
                 watchlist.map((movie, key) => (
-                    <Wrap key={key}>
-                      {movie.id}
-                      <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
-                          <img src={movie.cardImg} alt={movie.title} />
-                      </Link>
-                    </Wrap>
-                ))
-            }
+                  <Wrap key={key}>
+                    {movie.id}
+                    <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
+                        <img src={movie.cardImg} alt={movie.title} />
+                    </Link>
+                  </Wrap>
+              ))
+            )
+          }
         </Content>
         </Container>
     );
@@ -47,6 +51,13 @@ const Container = styled.div`
   @media (max-width: 768px) {
     margin: 100px 50px;
   }
+`;
+
+const Info = styled.p`
+  font-size: 16px;
+  color: gray;
+  text-align: center;
+  width: 100%;
 `;
 
 const Content = styled.div`
