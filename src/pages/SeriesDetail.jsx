@@ -14,12 +14,15 @@ const SeriesDetail = () => {
   const { id, episodeNumber } = useParams();
   const [detailData, setDetailData] = useState({});
 
+  const [quality, setQuality] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeNumber));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
+          setQuality(detailData.movieURLS['360p'])
         } else {
           console.log("No such document exists");
         }
@@ -77,12 +80,20 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={'https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4?alt=media&token=42e252f8-e979-42d3-b289-1d3ddee877f1'} />
+                  <ShakaPlayer autoPlay src={quality} />
                   <Box>
-                    <QualitySwitch>1080p</QualitySwitch>
-                    <QualitySwitch>720p</QualitySwitch>
-                    <QualitySwitch>480p</QualitySwitch>
-                    <QualitySwitch>360p</QualitySwitch>
+                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['1080p'])}>
+                      1080p
+                    </QualitySwitch>
+                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['720p'])}>
+                      720p
+                    </QualitySwitch>
+                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['480p'])}>
+                      480p
+                    </QualitySwitch>
+                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['360p'])}>
+                      360p
+                    </QualitySwitch>
                   </Box>
                 </Modal>
               )
