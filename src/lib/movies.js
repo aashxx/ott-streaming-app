@@ -8,7 +8,13 @@ export const movies =  [
             "title": "Inside Out",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/5C647DF3FFBFA343CFEA84AC715148F25F9E86F398B408010CC403E7654FB908/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-01").toLocaleDateString(),
-            "type": "movie"
+            "type": "movie",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4E9E81584305009D6385F6178D4B6930E97CD6EC4A3B53C818400DEF778FFA9A/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -18,7 +24,13 @@ export const movies =  [
             "title": "A tail of two kitties",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/50B933E83609BEEFEDFA177A6D96DBFA7804C14F70A0B5AB314E892E65498ACF/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-05").toLocaleDateString(),
-            "type": "sport"
+            "type": "sport",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -28,7 +40,13 @@ export const movies =  [
             "title": "Bao",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-02").toLocaleDateString(),
-            "type": "movie"
+            "type": "movie",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -39,33 +57,54 @@ export const movies =  [
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-07").toLocaleDateString(),
             "type": "series",
-            // "episodes": [
-            //     {
-            //       "episodeNumber": "1",
-            //       "title": "EP1: Tangled",
-            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //       "duration": "2010 • 1h 40m •",
-            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
-            //     {
-            //         "episodeNumber": "2",
-            //         "title": "EP2: Tangled",
-            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //         "duration": "2010 • 1h 40m •",
-            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
-            //     {
-            //         "episodeNumber": "3",
-            //         "title": "EP3: Tangled",
-            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //         "duration": "2010 • 1h 40m •",
-            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
+            "episodes": [
+                {
+                  "episodeNumber": "1",
+                  "title": "EP1: Tangled",
+                  "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                  "duration": "2010 • 1h 40m •",
+                  "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+                  "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                  "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                  "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
+                },
+                {
+                    "episodeNumber": "2",
+                    "title": "EP2: Tangled",
+                    "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                    "duration": "2010 • 1h 40m •",
+                    "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+                    "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                    "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                    "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
+                },
+                {
+                    "episodeNumber": "3",
+                    "title": "EP3: Tangled",
+                    "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                    "duration": "2010 • 1h 40m •",
+                    "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+                    "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                    "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                    "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
+                },
             
-            // ]
+            ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/56EEBB17CC25C9FE16E334C34EF96BF7D91EC9BA3B438F88FB24E1C2AE785E03/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -112,7 +151,13 @@ export const movies =  [
             "title": "Moana",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/9562874BAB22B22A698368819B9EBF30FEB0291543552EB2416A5A61A73F63F4/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-21").toLocaleDateString(),
-            "type": "cartoon"
+            "type": "cartoon",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/B409C2A425D58C32D822EB633C7CAE3DC910DC2FC62D2B1807A0BB092C531E9A/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -122,7 +167,13 @@ export const movies =  [
             "title": "Incredibles 2",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/2041CE26663867FC4EF20377B8625BD629E619452E23BCDB1AB259DD475C2EA1/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-15").toLocaleDateString(),
-            "type": "movie"
+            "type": "movie",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D53D1F5D357587A8D09067AB09FFC7096F837CBAAE02BDC3C0E75814471A1E36/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -206,7 +257,13 @@ export const movies =  [
             "title": "The Simpsons",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/47A6FB38D95B3A5EF5583C9EED0B698ED2992CBA4AC7222DD3269DC92DFA03A6/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-31").toLocaleDateString(),
-            "type": "cartoon"
+            "type": "cartoon",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F6CDB6C0EB2D77EB19BCADA31F85066E001A1F61FA68F4AC3356A73FE076477F/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -253,7 +310,13 @@ export const movies =  [
             "title": "Raya",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/E7D8EFFDD30B2A0E205DDD9929207439B21E7595709769F2A23C50457664FFB2/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-18").toLocaleDateString(),
-            "type": "sport"
+            "type": "sport",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/09DAD6A5DAECB6BA9E329FFA896B18978FE4AD5540C070D7973EE53357DD4D24/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -263,7 +326,13 @@ export const movies =  [
             "title": "Auntie EDNA",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/A31BE6502DC7A3A01DAF58DF7E91AB6FF598A078C8FA88A1DB2D7B7E25439464/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-10").toLocaleDateString(),
-            "type": "movie"
+            "type": "movie",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6FF2B403436E6558C08FB44B40AE334A9172FA293A8325940E8E7FF7F696E4D3/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -273,7 +342,13 @@ export const movies =  [
             "title": "Mickey mouse",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4FF3FCD567F0263430DFC33B9489CE2799AE33B50AD553DE65F03B3EA2E19828/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-20").toLocaleDateString(),
-            "type": "cartoon"
+            "type": "cartoon",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/456A711C19899C881600F6247705E5253EB18C2471D75E5281E1FF6ACB6D2FBA/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -283,7 +358,13 @@ export const movies =  [
             "title": "The falcon and the winter soldier",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4A67A42FB16607DAE7E22266D3F00181965178ED1884047C2D982EE7D89D3554/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-25").toLocaleDateString(),
-            "type": "sport"
+            "type": "sport",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/28F85D4A1F7CA135B7B20B3EDB42EDA73196C2A71C52C5400A6C2285F8E071BE/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -293,6 +374,12 @@ export const movies =  [
             "title": "My music story",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/97BB36F8B9FC053F561894DD7B1C42C4FD20E63560F481CBCB3B9D3600CFCA3B/scale?width=1440&aspectRatio=1.78",
             "releaseDate": new Date("2024-01-26").toLocaleDateString(),
-            "type": "sport"
+            "type": "sport",
+            "movieURLS": {
+                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            }
         }
     ]

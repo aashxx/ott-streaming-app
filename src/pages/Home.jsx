@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ImgSlider from '../components/ImgSlider';
 import Recommends from '../components/Recommends';
@@ -7,7 +7,6 @@ import NewReleases from '../components/NewReleases';
 import WatchSeries from '../components/WatchSeries';
 
 const Home = () => {
-
   return (
     <Container>
       <ImgSlider />
