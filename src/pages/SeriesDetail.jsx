@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
@@ -11,21 +11,30 @@ import { FaShare } from "react-icons/fa";
 
 const SeriesDetail = () => {
   
-  const { id, episodeNumber } = useParams();
+  const { id, episodeId } = useParams();
   const [detailData, setDetailData] = useState({});
 
   const [quality, setQuality] = useState(null);
 
+  const [episodes, setEpisodes] = useState([]);
+
+  const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
+  let navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeNumber));
+        const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeId));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
-          setQuality(detailData.movieURLS['360p'])
+          setQuality(detailData.movieURLS['360p']);
         } else {
           console.log("No such document exists");
         }
+
+        const episodesSnapshot = await getDocs(collection(db, "movies", id, "episodes"));
+        const episodesData = episodesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setEpisodes(episodesData);
 
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,7 +42,7 @@ const SeriesDetail = () => {
     };
   
     fetchData();
-  }, [id, episodeNumber, detailData.id]);
+  }, [id, episodeId, detailData.id]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -47,6 +56,14 @@ const SeriesDetail = () => {
       }
     } else {
       console.log("Web Share API not supported");
+    }
+  }
+
+  const navigateToNextEpisode = () => {
+    setCurrentEpisodeIndex(prevIndex => prevIndex + 1);
+    if (currentEpisodeIndex < episodes.length - 1) {
+      const nextEpisodeId = episodes[currentEpisodeIndex + 1].id;
+      navigate(`/series/detail/${id}/${nextEpisodeId}`);
     }
   }
 
@@ -68,6 +85,7 @@ const SeriesDetail = () => {
                 <span>Play</span>
               </Player>
             }
+            open={true}
             modal
             nested
           >
@@ -80,7 +98,7 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={quality} />
+                  <ShakaPlayer autoPlay src={quality} onEnded={navigateToNextEpisode} />
                   <Box>
                     <QualitySwitch onClick={() => setQuality(detailData.movieURLS['1080p'])}>
                       1080p

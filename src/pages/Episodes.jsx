@@ -64,11 +64,11 @@ const Episodes = () => {
           </Box>
           <Content>
               {
-                  episodes.map((movie, key) => (
+                  episodes.map((episode, key) => (
                       <Wrap key={key}>
-                        {movie.id}
-                        <Link to={`/series/detail/${id}/${movie.id}`}>
-                            <img src={movie.cardImg} alt={movie.title} />
+                        {episode.id}
+                        <Link to={`/series/detail/${id}/${episode.id}`}>
+                            <img src={episode.cardImg} alt={episode.title} />
                         </Link>
                       </Wrap>
                   ))
