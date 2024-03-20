@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
@@ -21,13 +21,15 @@ const SeriesDetail = () => {
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   let navigate = useNavigate();
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeId));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
-          setQuality(detailData.movieURLS['360p']);
+          setQuality(movieDoc.data().movieURLS['360p']);
         } else {
           console.log("No such document exists");
         }
@@ -43,6 +45,11 @@ const SeriesDetail = () => {
   
     fetchData();
   }, [id, episodeId, detailData.id]);
+
+  useEffect(() => {
+    // Open the Popup when the component mounts
+    setIsPopupOpen(true);
+  }, []);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -85,7 +92,8 @@ const SeriesDetail = () => {
                 <span>Play</span>
               </Player>
             }
-            open={true}
+            open={isPopupOpen}
+            onClose={() => setIsPopupOpen(false)}
             modal
             nested
           >

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -12,15 +12,29 @@ import SeriesDetail from './pages/SeriesDetail';
 import Watchlist from './pages/Watchlist';
 import Search from './pages/Search';
 import Episodes from './pages/Episodes';
+import Dashboard from './admin/pages/Dashboard';
+import Upload from './admin/pages/Upload';
+import Users from './admin/pages/Users';
 
 const App = () => {
-
+  
   const [openNav, setOpenNav] = useState(false);
 
   return (
     <Router>
-      <MobileNav openNav={openNav} setOpenNav={setOpenNav} />
-      <Navbar openNav={openNav} setOpenNav={setOpenNav} />
+      <AppContent openNav={openNav} setOpenNav={setOpenNav} />
+    </Router>
+  );
+};
+
+const AppContent = ({ openNav, setOpenNav }) => {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  return (
+    <>
+      {!isAdmin && <MobileNav openNav={openNav} setOpenNav={setOpenNav} />}
+      {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} />}
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
@@ -32,9 +46,12 @@ const App = () => {
         <Route path='/series/:id' element={<Episodes />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
+        <Route path='/admin/upload' element={<Upload />} />
+        <Route path='/admin/users' element={<Users />} />
       </Routes>
-    </Router>
-  )
-}
+    </>
+  );
+};
 
 export default App;
