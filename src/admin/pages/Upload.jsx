@@ -3,8 +3,85 @@ import Layout from '../components/Layout';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import { FaArrowCircleLeft } from 'react-icons/fa';
+import { useState } from 'react';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db, storage } from '../../lib/firebase';
 
 const Upload = () => {
+
+  const [formData, setFormData] = useState({
+    title: '',
+    subTitle: '',
+    description: '',
+    type: ''
+  });
+
+  const [fileInputs, setFileInputs] = useState({
+    cardImg: null,
+    backgroundImg: null,
+    titleImg: null,
+    movieURL: null,
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileInputChange = (e) => {
+    setFileInputs({ ...fileInputs, [e.target.name]: e.target.files[0] });
+  };
+
+  let uploadTasks = [];
+
+  const handleUpload = async (event) => {
+    event.preventDefault();
+    try {
+      uploadTasks = Object.keys(fileInputs).map(async (key) => {
+        const file = fileInputs[key];
+        if(file) {
+          const storageRef = ref(storage, `movies/${formData.title}/${key}`);
+          await uploadBytes(storageRef, file);
+          const downloadURL = await getDownloadURL(storageRef);
+          formData[`${key}`] = downloadURL;
+        }
+      });
+
+      await Promise.all(uploadTasks);
+
+      const docData = {
+        ...formData,
+        releaseDate: serverTimestamp()
+      }
+
+      const docRef = await addDoc(collection(db, 'movies'), docData);
+
+      alert('Form submitted successfully! Document ID: ' + docRef.id);
+
+      setFormData({
+        title: '',
+        subTitle: '',
+        description: '',
+        type: '',
+      });
+      setFileInputs({
+        cardImg: null,
+        backgroundImg: null,
+        titleImg: null,
+        movieURL: null,
+      });
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  }
+
+  const [selectedType, setSelectedType] = useState('');
+
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
+  };
+
   return (
     <Layout>
         <Container>
@@ -20,38 +97,42 @@ const Upload = () => {
                           </CloseBtn>
                           <Description>Upload a movie</Description>
                         </MenuBar>
-                        <UploadForm>
+                        <UploadForm onSubmit={handleUpload} method='post'>
                           <InputGroup>
                             <Label>Title</Label>
-                            <Input type="text" placeholder='Eg: Raya' />
+                            <Input name='title' onChange={handleInputChange} value={formData.title} type="text" placeholder='Eg: Raya' />
                           </InputGroup>
                           <InputGroup>
                             <Label>Sub Title</Label>
-                            <Input type="text" placeholder='Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure' />
+                            <Input name='subTitle' onChange={handleInputChange} value={formData.subTitle} type="text" placeholder='Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure' />
                           </InputGroup>
                           <InputGroup>
                             <Label>Description</Label>
-                            <Textarea placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021." />
+                            <Textarea name='description' onChange={handleInputChange} value={formData.description} placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021." />
                           </InputGroup>
                           <InputGroup>
                             <Label>Card Image</Label>
-                            <FileInput type='file' accept='jpg/png' />
+                            <FileInput name='cardImg' onChange={handleFileInputChange} type='file' accept='image/*' />
                           </InputGroup>
                           <InputGroup>
                             <Label>Background Image</Label>
-                            <FileInput type='file' accept='jpg/png' />
+                            <FileInput name='backgroundImg' onChange={handleFileInputChange} type='file' accept='image/*' />
                           </InputGroup>
                           <InputGroup>
                             <Label>Title Image</Label>
-                            <FileInput type='file' accept='jpg/png' />
+                            <FileInput name='titleImg' onChange={handleFileInputChange} type='file' accept='image/*' />
                           </InputGroup>
                           <InputGroup>
                             <Label>Select Category</Label>
-                            <Select name="type">
+                            <Select name="type" value={selectedType} onChange={handleTypeChange}>
                               <option value="movie">Movie</option>
                               <option value="series">Series</option>
                               <option value="sports">Sports</option>
                             </Select>
+                          </InputGroup>
+                          <InputGroup>
+                            <Label>Upload Movie</Label>
+                            <FileInput name='movieURL' onChange={handleFileInputChange} type='file' accept='video/*' />
                           </InputGroup>
                           <SubmitButton type="submit">Upload</SubmitButton>
                         </UploadForm>
