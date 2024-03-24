@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useSelector } from "react-redux";
 import { selectUID } from "../features/user/userSlice";
@@ -13,12 +13,17 @@ const WatchList = () => {
     const user = useSelector(selectUID);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "users", user, "watchlist")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
-            setWatchlist(moviesData);
-        });
+      const fetchData = async () => {
+        try {
+          const unsubscribe = await getDocs(collection(doc(db, "users", user), "watchlist"));
+          const watchlistData = unsubscribe.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setWatchlist(watchlistData);
+        } catch(err) {
+          console.error("Error", err);
+        }
+      }
 
-        return unsubscribe;
+      fetchData();
     }, []);
 
     return (
