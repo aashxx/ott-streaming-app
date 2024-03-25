@@ -35,6 +35,9 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
         <UserImg src={userPhoto} alt={username} />
         <DropDown>
           <span onClick={handleSignOut}>Sign Out</span>
+          <span>
+            <Link to={'/admin/dashboard'}>Admin</Link>
+          </span>
         </DropDown>
       </SignOut>
     </>
