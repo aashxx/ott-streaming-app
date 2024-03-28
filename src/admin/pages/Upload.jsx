@@ -27,7 +27,7 @@ const Upload = () => {
       }
     }
 
-    // fetchData();
+    fetchData();
   }, []);
 
   const [uploadType, setUploadType] = useState(null);

@@ -103,7 +103,7 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={detailData.movieURL} onEnded={navigateToNextEpisode} />
+                  <ShakaPlayer autoPlay src={detailData.episodeURL} onEnded={navigateToNextEpisode} />
                   <Box>
                     <QualitySwitch >
                       1080p
