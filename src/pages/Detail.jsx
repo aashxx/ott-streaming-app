@@ -18,8 +18,6 @@ const Detail = () => {
 
   const [watchlistIcon, setWatchlistIcon] = useState(false);
 
-  const [quality, setQuality] = useState(null);
-
   const user = useSelector(selectUID);
 
   useEffect(() => {
@@ -28,7 +26,6 @@ const Detail = () => {
         const movieDoc = await getDoc(doc(db, "movies", id));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
-          setQuality(detailData.movieURLS['360p'])
         } else {
           console.log("No such document exists");
         }
@@ -43,7 +40,7 @@ const Detail = () => {
     };
   
     fetchData();
-  }, [id, user, detailData.id, quality]);
+  }, [id, user, detailData.id]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -101,18 +98,18 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={quality && quality} />
+                  <ShakaPlayer autoPlay src={detailData.movieURL} />
                   <Box>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['1080p'])}>
+                    <QualitySwitch >
                       1080p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['720p'])}>
+                    <QualitySwitch>
                       720p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['480p'])}>
+                    <QualitySwitch>
                       480p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['360p'])}>
+                    <QualitySwitch>
                       360p
                     </QualitySwitch>
                   </Box>

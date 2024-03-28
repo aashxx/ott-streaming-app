@@ -14,8 +14,6 @@ const SeriesDetail = () => {
   const { id, episodeId } = useParams();
   const [detailData, setDetailData] = useState({});
 
-  const [quality, setQuality] = useState(null);
-
   const [episodes, setEpisodes] = useState([]);
 
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
@@ -29,7 +27,6 @@ const SeriesDetail = () => {
         const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeId));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
-          setQuality(movieDoc.data().movieURLS['360p']);
         } else {
           console.log("No such document exists");
         }
@@ -106,18 +103,18 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={quality} onEnded={navigateToNextEpisode} />
+                  <ShakaPlayer autoPlay src={detailData.movieURL} onEnded={navigateToNextEpisode} />
                   <Box>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['1080p'])}>
+                    <QualitySwitch >
                       1080p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['720p'])}>
+                    <QualitySwitch>
                       720p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['480p'])}>
+                    <QualitySwitch>
                       480p
                     </QualitySwitch>
-                    <QualitySwitch onClick={() => setQuality(detailData.movieURLS['360p'])}>
+                    <QualitySwitch>
                       360p
                     </QualitySwitch>
                   </Box>

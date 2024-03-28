@@ -19,6 +19,7 @@ const Home = () => {
       "duration": "2010 • 1h 40m •",
       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+      "movieURL": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad"
     },
     {
         "episodeNumber": "2",
@@ -27,6 +28,7 @@ const Home = () => {
         "duration": "2010 • 1h 40m •",
         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+        "movieURL": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad"
     },
     {
         "episodeNumber": "3",
@@ -35,6 +37,7 @@ const Home = () => {
         "duration": "2010 • 1h 40m •",
         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+        "movieURL": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad"
     },
   ];
 
@@ -55,6 +58,19 @@ const Home = () => {
         console.error("Error", err);
       }
     }
+
+    const pushMovies = async () => {
+      try {
+        for(const movie of movies) {
+          await addDoc(collection(db, "movies"), movie);
+          console.log("Added");
+        }
+      } catch(err) {
+        console.error("Error", err);
+      }
+    }
+
+    // pushMovies();
 
     // pushData();
   }, []);
