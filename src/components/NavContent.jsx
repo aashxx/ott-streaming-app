@@ -18,10 +18,6 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
                 <img src="/images/series-icon.svg" alt="SERIES" />
                 <span>SERIES</span>
             </Link>
-            <Link to={"/sports"} onClick={() => setOpenNav(false)}>
-                <img src="/images/original-icon.svg" alt="ORIGINALS" />
-                <span>SPORTS</span>
-            </Link>
             <Link to={"/watchlist"} onClick={() => setOpenNav(false)}>
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>WATCHLIST</span>
@@ -30,14 +26,15 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
               <img src="/images/search-icon.svg" alt="SEARCH" />
                 <span>SEARCH</span>
             </Link>
+            <Link to={'/admin/dashboard'} onClick={() => setOpenNav(false)}>
+              <img src="/images/original-icon.svg" alt="ORIGINALS" />
+              <span>DASHBOARD</span>
+            </Link>
       </NavMenu>
       <SignOut>
         <UserImg src={userPhoto} alt={username} />
         <DropDown>
           <span onClick={handleSignOut}>Sign Out</span>
-          <span>
-            <Link to={'/admin/dashboard'}>Admin</Link>
-          </span>
         </DropDown>
       </SignOut>
     </>
