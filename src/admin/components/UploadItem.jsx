@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const UploadItem = ({ movie }) => {
+const UploadItem = ({ movie, style }) => {
   return (
-    <Box>
-        <Text>{movie.title}</Text>
-        <Text>{movie.type}</Text>
+    <Box style={{ border: `2px solid ${style === "white" ? "white" : "#090b13"}` }}>
+        <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{movie.title}</Text>
+        <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{movie.type}</Text>
         <NewUpload>View Details</NewUpload>
     </Box>
   )

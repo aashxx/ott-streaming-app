@@ -55,56 +55,56 @@ export const movies =  [
             "subTitle": "2010 • 1h 40m • Family, Fantasy, Animation, Action-Adventure, Musical",
             "title": "Tangled",
             "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
-            "releaseDate": new Date("2024-01-07").toLocaleDateString(),
+            "releaseDate": "2024-01-07",
             "type": "series",
-            "episodes": [
-                {
-                  "episodeNumber": "1",
-                  "title": "EP1: Tangled",
-                  "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-                  "duration": "2010 • 1h 40m •",
-                  "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
-                  "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-                  "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-                  "movieURLS": {
-                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
-                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
-                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
-                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
-            }
-                },
-                {
-                    "episodeNumber": "2",
-                    "title": "EP2: Tangled",
-                    "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-                    "duration": "2010 • 1h 40m •",
-                    "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
-                    "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-                    "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-                    "movieURLS": {
-                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
-                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
-                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
-                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
-            }
-                },
-                {
-                    "episodeNumber": "3",
-                    "title": "EP3: Tangled",
-                    "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-                    "duration": "2010 • 1h 40m •",
-                    "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
-                    "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-                    "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-                    "movieURLS": {
-                "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
-                "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
-                "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
-                "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
-            }
-                },
+            // "episodes": [
+            //     {
+            //       "episodeNumber": "1",
+            //       "title": "EP1: Tangled",
+            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //       "duration": "2010 • 1h 40m •",
+            //       "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //       "movieURLS": {
+            //     "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+            //     "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+            //     "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+            //     "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            // }
+            //     },
+            //     {
+            //         "episodeNumber": "2",
+            //         "title": "EP2: Tangled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //         "movieURLS": {
+            //     "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+            //     "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+            //     "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+            //     "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            // }
+            //     },
+            //     {
+            //         "episodeNumber": "3",
+            //         "title": "EP3: Tangled",
+            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+            //         "duration": "2010 • 1h 40m •",
+            //         "titleImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F70235E3463A6F246EB462ED5379F9D41D6318E80098BD40900E7AFC1C7D932D/scale?width=1440&aspectRatio=1.78",
+            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+            //         "movieURLS": {
+            //     "360p" : "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_360p.mp4?alt=media&token=0542c80e-8d5a-4928-a7a0-25729cd29bad",
+            //     "480p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_480p.mp4?alt=media&token=ac6536ff-873a-44bc-adc3-d9b049abd2ef",
+            //     "720p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_720p.mp4?alt=media&token=2a8b6747-50f8-4be3-a6a8-a5e1ff6fe0f7",
+            //     "1080p": "https://firebasestorage.googleapis.com/v0/b/video-streaming-app-59520.appspot.com/o/movies%2Fraya.mp4_1080p.mp4?alt=media&token=1d01a496-9ad2-4bd8-8435-aaf7b6846e57"
+            // }
+            //     },
             
-            ]
+            // ]
         },
         {
             "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/56EEBB17CC25C9FE16E334C34EF96BF7D91EC9BA3B438F88FB24E1C2AE785E03/scale?width=1440&aspectRatio=1.78&format=jpeg",
@@ -116,30 +116,30 @@ export const movies =  [
             "releaseDate": new Date("2024-01-22").toLocaleDateString(),
             "type": "series",
             // "episodes": [
-            //     {
-            //       "episodeNumber": "1",
-            //       "title": "EP1: Soul",
-            //       "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //       "duration": "2010 • 1h 40m •",
-            //       "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //       "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
-            //     {
-            //         "episodeNumber": "2",
-            //         "title": "EP2: Soul",
-            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //         "duration": "2010 • 1h 40m •",
-            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
-            //     {
-            //         "episodeNumber": "3",
-            //         "title": "EP3: Soul",
-            //         "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
-            //         "duration": "2010 • 1h 40m •",
-            //         "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
-            //         "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
-            //     },
+                // {
+                //   "episodeNumber": "1",
+                //   "title": "EP1: Soul",
+                //   "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                //   "duration": "2010 • 1h 40m •",
+                //   "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                //   "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                // },
+                // {
+                //     "episodeNumber": "2",
+                //     "title": "EP2: Soul",
+                //     "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                //     "duration": "2010 • 1h 40m •",
+                //     "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                //     "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                // },
+                // {
+                //     "episodeNumber": "3",
+                //     "title": "EP3: Soul",
+                //     "description": "When the kingdom's most wanted bandit is taken hostage by Rapunzel — a teen with 70 feet of golden hair who's looking to escape the tower where she's been locked away for years — the unlikely duo sets off on a hair-raising escapade.",
+                //     "duration": "2010 • 1h 40m •",
+                //     "backgroundImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/FA1548A6B82C9991B1D38DF251A388FEA2483904510FBC73E150F67F7BDE38C0/scale?width=1440&aspectRatio=1.78&format=jpeg",
+                //     "cardImg": "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/0ECD36DD35658155915685271440833C29ED87E788CF8AE111AA6BCA6B939C37/scale?width=400&aspectRatio=1.78&format=jpeg",
+                // },
             
             // ]
         },
