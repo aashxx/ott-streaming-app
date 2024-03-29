@@ -28,7 +28,7 @@ const Upload = () => {
     }
 
     fetchData();
-  }, []);
+  }, [setContent]);
 
   const [uploadType, setUploadType] = useState(null);
 
@@ -79,7 +79,7 @@ const Upload = () => {
         <Uploads>
           {
             content.map(movie => (
-              <UploadItem key={movie.id} movie={movie} style={"black"} />
+              <UploadItem key={movie.id} movie={movie} setContent={setContent} style={"black"} />
             ))
           }
         </Uploads>
