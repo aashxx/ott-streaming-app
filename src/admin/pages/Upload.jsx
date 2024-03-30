@@ -41,7 +41,7 @@ const Upload = () => {
       <Container>
         <Box>
             <Heading>Uploaded Content</Heading>
-            <Popup trigger={<NewUpload>New Movie</NewUpload>} closeOnDocumentClick={false} closeOnEscape={false} modal nested>
+            <Popup trigger={<NewUpload>New Content</NewUpload>} closeOnDocumentClick={false} closeOnEscape={false} modal nested>
               {
                 close => (
                   <Modal>

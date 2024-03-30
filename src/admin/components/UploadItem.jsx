@@ -185,7 +185,7 @@ const UploadItem = ({ movie, setContent }) => {
   return (
     <Box>
       <Text>{movie.title}</Text>
-      <Text>{movie.type}</Text>
+      <TypeText>{movie.type}</TypeText>
       <Div>
         <Popup
           trigger={<ViewDetails>Edit</ViewDetails>}
@@ -367,6 +367,12 @@ const Delete = styled.button`
 `;
 
 const Text = styled.h2`
+  color: #090b13;
+  font-size: 16px;
+  width: 30%;
+`;
+
+const TypeText = styled.h2`
   color: #090b13;
   font-size: 16px;
 `;
