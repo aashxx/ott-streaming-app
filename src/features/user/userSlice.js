@@ -11,6 +11,7 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
+        // SIGN IN - User creds are stored
         setUserLoginDetails: (state, action) => {
             state.id = action.payload.id;
             state.name = action.payload.name;
@@ -18,6 +19,7 @@ const userSlice = createSlice({
             state.photo = action.payload.photo;
         },
 
+        // SIGN OUT - User creds are removed
         setSignOutState: state => {
             state.id = null;
             state.name = null;
