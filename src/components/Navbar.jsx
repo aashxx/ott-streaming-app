@@ -10,11 +10,13 @@ import { onAuthStateChanged } from "firebase/auth";
 
 const Navbar = ({ openNav, setOpenNav }) => {
 
+  // Accessing logged in user credentials from store
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const username = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
 
+  // Signout method
   const handleSignOut = async () => {
     if(username) {
       auth.signOut().then(() => {
@@ -24,6 +26,7 @@ const Navbar = ({ openNav, setOpenNav }) => {
     }
   }
 
+  // Auto fetch when user changes
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if(user) {
@@ -32,6 +35,7 @@ const Navbar = ({ openNav, setOpenNav }) => {
     });
   }, [username]);
 
+  // Fetch logged in user creds from store
   const setUser = (user) => {
     dispatch(
       setUserLoginDetails({

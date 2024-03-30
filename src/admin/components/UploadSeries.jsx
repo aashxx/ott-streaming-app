@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../lib/firebase";
-import UploadItem from "./UploadItem";
+import EpisodeItem from "./EpisodeItem";
 
 const UploadSeries = () => {
 
@@ -182,7 +182,7 @@ const UploadSeries = () => {
         </InputGroup>
         {
             episodes.map((episode,i) => (
-                <UploadItem movie={episode} key={i} style={"white"} />
+                <EpisodeItem movie={episode} key={i} style={"white"} />
             ))
         }
         <Box>

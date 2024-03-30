@@ -1,12 +1,29 @@
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { db, storage } from '../../lib/firebase';
 import Popup from 'reactjs-popup';
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import EpisodeItem from './EpisodeItem';
 
 const UploadItem = ({ movie, style, setContent }) => {
+
+  const [episodes, setEpisodes] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const contentSnapshot = await getDocs(collection(db, "movies", movie.id, "episodes"));
+        const contentData = contentSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setEpisodes(contentData.reverse());
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    fetchData();
+  }, [movie.id]);
 
   const [updateContentData, setUpdateContentData] = useState({
     title: movie.title,
@@ -15,7 +32,6 @@ const UploadItem = ({ movie, style, setContent }) => {
     cardImg: movie.cardImg,
     backgroundImg: movie.backgroundImg,
     titleImg: movie.titleImg,
-    movieURL: movie.movieURL
   });
 
   const [contentFileInput, setContentFileInput] = useState({
@@ -60,6 +76,20 @@ const UploadItem = ({ movie, style, setContent }) => {
 
       await updateDoc(doc(db, "movies", movie.id), updatedDoc);
 
+      if(movie.type === "series") {
+
+        const newEpisodes = episodes.filter(episode => !episode.id);
+
+        await Promise.all(newEpisodes.map(async (episode) => {
+          episode.cardImg = updateContentData.cardImg;
+          episode.backgroundImg = updateContentData.backgroundImg;
+          episode.titleImg = updateContentData.titleImg;
+          await addDoc(collection(doc(db, "movies", movie.id), 'episodes'), episode);
+        }));
+  
+        console.log(episodes);
+      }
+
       alert('Content Updated successfully!');
 
     } catch (err) {
@@ -77,12 +107,41 @@ const UploadItem = ({ movie, style, setContent }) => {
     }
   }
 
+  const [episodeNumber, setEpisodeNumber] = useState('');
+  const [episodeFile, setEpisodeFile] = useState(null);
+  
+  const handleAddEpisode = async (event) => {
+    event.preventDefault();
+    try {
+        if (episodeFile) {
+            const storageRef = ref(storage, `movies/${updateContentData.title}/episodes/${episodeNumber}.mp4`);
+            await uploadBytes(storageRef, episodeFile);
+            const episodeDownloadURL = await getDownloadURL(storageRef);
+        
+            const updatedEpisodeUploadData = {
+                episodeNumber: episodeNumber,
+                title: `EP${episodeNumber}: ${updateContentData.title}`,
+                subTitle: updateContentData.subTitle,
+                description: updateContentData.description,
+                cardImg: updateContentData.cardImg,
+                backgroundImg: updateContentData.backgroundImg,
+                titleImg: updateContentData.titleImg,
+                episodeURL: episodeDownloadURL
+            };
+    
+            setEpisodes(prevEpisodes => [...prevEpisodes, updatedEpisodeUploadData]);
+        }
+    } catch (err) {
+        console.error("Error", err);
+    }
+};
+
   return (
     <Box style={{ border: `2px solid ${style === "white" ? "white" : "#090b13"}` }}>
         <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{movie.title}</Text>
         <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{movie.type}</Text>
         <Div>
-          <Popup trigger={<ViewDetails>View Details</ViewDetails>} closeOnDocumentClick={false} closeOnEscape={false} modal nested>
+          <Popup trigger={<ViewDetails>Edit</ViewDetails>} closeOnDocumentClick={false} closeOnEscape={false} modal nested>
             {
               close => (
                 <Modal>
@@ -90,7 +149,7 @@ const UploadItem = ({ movie, style, setContent }) => {
                     <CloseBtn onClick={() => {close();}}>
                       <FaArrowCircleLeft />
                     </CloseBtn>
-                    <Description>Edit Meta Data</Description>
+                    <Description>Edit Content</Description>
                   </MenuBar>
                   <UploadForm onSubmit={updateContent} method="post">
                     <InputGroup>
@@ -146,6 +205,40 @@ const UploadItem = ({ movie, style, setContent }) => {
                         accept="image/*"
                         />
                     </InputGroup>
+                    {
+                      movie.type === "series" && (
+                        <>
+                        {
+                          episodes.map((episode,i) => (
+                              <EpisodeItem movieId={movie.id} episode={episode} setEpisodes={setEpisodes} key={i} style={"white"} />
+                          ))
+                        }
+                        <EpisodeBox>
+                          <Heading>Add Episodes</Heading>
+                          <InputGroup>
+                          <Label>Episode No.</Label>
+                          <Input
+                              name="episodeNumber"
+                              onChange={(e) => setEpisodeNumber(e.target.value)}
+                              value={episodeNumber}
+                              type="text"
+                              placeholder="Eg: 1"
+                          />
+                          </InputGroup>
+                          <InputGroup>
+                          <Label>Upload Episode</Label>
+                          <FileInput
+                              name="episodeFiles"
+                              onChange={(e) => setEpisodeFile(e.target.files[0])}
+                              type="file"
+                              accept="video/*"
+                          />
+                          </InputGroup>
+                          <SubmitButton onClick={handleAddEpisode}>Add Episode</SubmitButton>
+                        </EpisodeBox>
+                        </>
+                      )
+                    }
                     <Delete onClick={() => close()}>Cancel</Delete>
                     <SubmitButton type="submit">Update Changes</SubmitButton>
                 </UploadForm>
@@ -167,6 +260,15 @@ const Box = styled.div`
   border-radius: 10px;
   border: 2px solid #090b13;
   padding: 0 20px;
+`;
+
+const EpisodeBox = styled.div`
+  padding: 20px 30px;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const Div = styled.div`
@@ -290,6 +392,12 @@ const FileInput = styled.input`
   padding: 10px;
   border: none;
   outline: none;
+`;
+
+const Heading = styled.h3`
+  color: white;
+  font-size: 20px;
+  text-align: center;
 `;
 
 const SubmitButton = styled.button`

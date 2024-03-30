@@ -25,7 +25,7 @@ const Episodes = () => {
       const fetchData = async () => {
           const unsubscribe = onSnapshot(query(collection(db, "movies", id, "episodes")), (snapshot) => {
           const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
-          setEpisodes(moviesData);
+          setEpisodes(moviesData.reverse());
         });
 
         const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", id));

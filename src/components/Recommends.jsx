@@ -6,6 +6,7 @@ import { db } from "../lib/firebase";
 
 const Recommends = () => {
 
+  // Fetch content recommended for the user
   const [recommends, setRecommends] = useState([]);
 
   useEffect(() => {
@@ -26,7 +27,6 @@ const Recommends = () => {
         {
           recommends && recommends.map((movie, key) => (
             <Wrap key={key}>
-              {movie.id}
               <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>

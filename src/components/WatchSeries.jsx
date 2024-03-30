@@ -6,6 +6,7 @@ import { db } from "../lib/firebase";
 
 const WatchSeries = () => {
 
+  // Content with series format is fetched here
   const [watchSeries, setWatchSeries] = useState([]);
 
   useEffect(() => {
@@ -26,7 +27,6 @@ const WatchSeries = () => {
         {
           watchSeries && watchSeries.map((movie, key) => (
             <Wrap key={key}>
-              {movie.id}
               <Link to={'/series/' + movie.id}>
                 <img src={movie.cardImg} alt={movie.title} />
               </Link>

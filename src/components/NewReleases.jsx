@@ -6,6 +6,7 @@ import { db } from "../lib/firebase";
 
 const NewReleases = () => {
 
+  // Fetch content based on the release date
   const [newReleases, setNewReleases] = useState([]);
 
   useEffect(() => {
@@ -25,7 +26,6 @@ const NewReleases = () => {
           newReleases && newReleases.map((movie, key) => {
             return (
               <Wrap key={key}>
-                {movie.id}
                 <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
                   <img src={movie.cardImg} alt={movie.title} />
                 </Link>

@@ -8,45 +8,55 @@ import { selectUID } from "../features/user/userSlice";
 
 const WatchList = () => {
 
-    const [watchlist, setWatchlist] = useState([]);
+  // Content added by user to his watchlist
+  const [watchlist, setWatchlist] = useState([]);
 
-    const user = useSelector(selectUID);
+  const user = useSelector(selectUID);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const unsubscribe = await getDocs(collection(doc(db, "users", user), "watchlist"));
-          const watchlistData = unsubscribe.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setWatchlist(watchlistData);
-        } catch(err) {
-          console.error("Error", err);
-        }
+  // Creates a subcollection "WATCHLIST" and stores those docs there and fetches
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const unsubscribe = await getDocs(
+          collection(doc(db, "users", user), "watchlist")
+        );
+        const watchlistData = unsubscribe.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setWatchlist(watchlistData);
+      } catch (err) {
+        console.error("Error", err);
       }
+    };
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
-    return (
-        <Container>
-          <h4>Your Watchlist</h4>
-          <Content>
-              {
-                watchlist.length === 0 ? (
-                  <Info>No movies added</Info>
-                ) : (
-                    watchlist.map((movie, key) => (
-                      <Wrap key={key}>
-                        {movie.id}
-                        <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
-                            <img src={movie.cardImg} alt={movie.title} />
-                        </Link>
-                      </Wrap>
-                  ))
-                )
-              }
-          </Content>
-        </Container>
-    );
+  return (
+    <Container>
+      <h4>Your Watchlist</h4>
+      <Content>
+        {watchlist.length === 0 ? (
+          <Info>No movies added</Info>
+        ) : (
+          watchlist.map((movie, key) => (
+            <Wrap key={key}>
+              <Link
+                to={
+                  movie.type === "series"
+                    ? `/series/${movie.id}`
+                    : `/movies/detail/${movie.id}`
+                }
+              >
+                <img src={movie.cardImg} alt={movie.title} />
+              </Link>
+            </Wrap>
+          ))
+        )}
+      </Content>
+    </Container>
+  );
 };
 
 const Container = styled.div`
