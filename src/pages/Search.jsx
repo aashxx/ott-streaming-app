@@ -6,44 +6,62 @@ import { db } from "../lib/firebase";
 
 const Search = () => {
 
-    const [searchMovies, setSearchMovies] = useState([]);
-    const [searchVal, setSearchVal] = useState("");
-    const [results, setResults] = useState([]);
+  // Search a movie
+  const [searchMovies, setSearchMovies] = useState([]);
+  const [searchVal, setSearchVal] = useState("");
+  const [results, setResults] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
-            setSearchMovies(moviesData);
-        });
-
-        return unsubscribe;
-    }, []);
-
-    const searchMovie = (event) => {
-        const result = searchMovies.filter(movie => movie.title.toLowerCase().includes(searchVal.toLowerCase()));
-        if(event.key == "Enter") {
-            setResults(result);
-        }
-    }
-
-    return (
-        <Container>
-            <h4>Search Here</h4>
-            <SearchBar type="text" value={searchVal} onChange={(e) => setSearchVal(e.target.value)} onKeyDown={searchMovie} />
-        <Content>
-            {
-                results.map((movie, key) => (
-                    <Wrap key={key}>
-                      {movie.id}
-                      <Link to={movie.type === 'series' ? '/series/' + movie.id : '/movies/detail/' + movie.id}>
-                          <img src={movie.cardImg} alt={movie.title} />
-                      </Link>
-                    </Wrap>
-                ))
-            }
-        </Content>
-        </Container>
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(collection(db, "movies")),
+      (snapshot) => {
+        const moviesData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSearchMovies(moviesData);
+      }
     );
+
+    return unsubscribe;
+  }, []);
+
+  const searchMovie = (event) => {
+    const result = searchMovies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchVal.toLowerCase())
+    );
+    if (event.key == "Enter") {
+      setResults(result);
+    }
+  };
+
+  return (
+    <Container>
+      <h4>Search Here</h4>
+      <SearchBar
+        type="text"
+        value={searchVal}
+        onChange={(e) => setSearchVal(e.target.value)}
+        onKeyDown={searchMovie}
+      />
+      <Content>
+        {results.map((movie, key) => (
+          <Wrap key={key}>
+            {movie.id}
+            <Link
+              to={
+                movie.type === "series"
+                  ? "/series/" + movie.id
+                  : "/movies/detail/" + movie.id
+              }
+            >
+              <img src={movie.cardImg} alt={movie.title} />
+            </Link>
+          </Wrap>
+        ))}
+      </Content>
+    </Container>
+  );
 };
 
 const Container = styled.div`

@@ -1,82 +1,108 @@
-import { collection, deleteDoc, doc, getDoc, onSnapshot, query, setDoc } from 'firebase/firestore';
-import React from 'react'
-import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { db } from '../lib/firebase';
-import styled from 'styled-components';
-import { useEffect } from 'react';
-import { FaPlus, FaCheck } from 'react-icons/fa';
-import { selectUID } from '../features/user/userSlice';
-import { useSelector } from 'react-redux';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  setDoc,
+} from "firebase/firestore";
+import React from "react";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { db } from "../lib/firebase";
+import styled from "styled-components";
+import { useEffect } from "react";
+import { FaPlus, FaCheck } from "react-icons/fa";
+import { selectUID } from "../features/user/userSlice";
+import { useSelector } from "react-redux";
 
 const Episodes = () => {
 
-    const params = useParams();
-    const { id } = params;
+  // Accessing ID from the param
+  const params = useParams();
+  const { id } = params;
+  
+  // Accessing all episodes associated to content ID
+  const [episodes, setEpisodes] = useState([]);
 
-    const [watchlistIcon, setWatchlistIcon] = useState(false);
+  // Conditional check - If content is added to watchlist or not
+  const [watchlistIcon, setWatchlistIcon] = useState(false);
 
-    const [episodes, setEpisodes] = useState([]);
+  // Accessing user creds
+  const user = useSelector(selectUID);
 
-    const user = useSelector(selectUID);
+  useEffect(() => {
+    const fetchData = async () => {
 
-    useEffect(() => {
-
-      const fetchData = async () => {
-          const unsubscribe = onSnapshot(query(collection(db, "movies", id, "episodes")), (snapshot) => {
-          const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()}));
+      // Get the EPISODES collection 
+      const unsubscribe = onSnapshot(
+        query(collection(db, "movies", id, "episodes")),
+        (snapshot) => {
+          const moviesData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
           setEpisodes(moviesData.reverse());
-        });
-
-        const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", id));
-        if (watchlistDoc.exists()) {
-          setWatchlistIcon(true);
         }
+      );
 
-        return unsubscribe;
-      }
-
-      fetchData();
-
-    }, [id, user]);
-
-    const addToWatchList = async () => {
-      if(!watchlistIcon) {
+      // Check if added to watchlist
+      const watchlistDoc = await getDoc(
+        doc(db, "users", user, "watchlist", id)
+      );
+      if (watchlistDoc.exists()) {
         setWatchlistIcon(true);
-        const movieDoc = await getDoc(doc(db, "movies", id));
-        console.log(movieDoc);
-        if(movieDoc.exists()) {
-          await setDoc(doc(collection(db, "users", user, "watchlist"), id), { id: movieDoc.id, ...movieDoc.data() });
-        }
-      } else {
-        setWatchlistIcon(false);
-        await deleteDoc(doc(db, "users", user, "watchlist", id));
       }
-    }
 
-    return (
-        <Container>
-          <Box>
-            <h4>Episodes</h4>
-            <AddList onClick={addToWatchList}>
-              {!watchlistIcon ? (<FaPlus style={{ color: 'white', fontSize: '18px' }} />) : (<FaCheck style={{ color: 'white', fontSize: '18px' }} />)}
-            </AddList>
-          </Box>
-          <Content>
-              {
-                  episodes.map((episode, key) => (
-                      <Wrap key={key}>
-                        {episode.id}
-                        <Link to={`/series/detail/${id}/${episode.id}`}>
-                            <img src={episode.cardImg} alt={episode.title} />
-                        </Link>
-                      </Wrap>
-                  ))
-              }
-          </Content>
-        </Container>
-    );
-}
+      return unsubscribe;
+    };
+
+    fetchData();
+  }, [id, user]);
+
+  // Add to watchlist method
+  const addToWatchList = async () => {
+    if (!watchlistIcon) {
+      setWatchlistIcon(true);
+      const movieDoc = await getDoc(doc(db, "movies", id));
+      console.log(movieDoc);
+      if (movieDoc.exists()) {
+        await setDoc(doc(collection(db, "users", user, "watchlist"), id), {
+          id: movieDoc.id,
+          ...movieDoc.data(),
+        });
+      }
+    } else {
+      setWatchlistIcon(false);
+      await deleteDoc(doc(db, "users", user, "watchlist", id));
+    }
+  };
+
+  return (
+    <Container>
+      <Box>
+        <h4>Episodes</h4>
+        <AddList onClick={addToWatchList}>
+          {!watchlistIcon ? (
+            <FaPlus style={{ color: "white", fontSize: "18px" }} />
+          ) : (
+            <FaCheck style={{ color: "white", fontSize: "18px" }} />
+          )}
+        </AddList>
+      </Box>
+      <Content>
+        {episodes.map((episode, key) => (
+          <Wrap key={key}>
+            <Link to={`/series/detail/${id}/${episode.id}`}>
+              <img src={episode.cardImg} alt={episode.title} />
+            </Link>
+          </Wrap>
+        ))}
+      </Content>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   padding: 0 0 26px;

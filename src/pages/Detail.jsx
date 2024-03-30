@@ -13,16 +13,22 @@ import { selectUID } from "../features/user/userSlice";
 
 const Detail = () => {
   
+  // Accessing ID from the param
   const { id } = useParams();
+
+  // Accessing the content meta data associated with ID
   const [detailData, setDetailData] = useState({});
 
+  // Conditional check - If content is added to watchlist or not
   const [watchlistIcon, setWatchlistIcon] = useState(false);
 
+  // Accessing user creds
   const user = useSelector(selectUID);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetching that content doc associated with the ID
         const movieDoc = await getDoc(doc(db, "movies", id));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
@@ -30,6 +36,7 @@ const Detail = () => {
           console.log("No such document exists");
         }
   
+        // Checking if added to watchlist or not
         const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", detailData.id));
         if (watchlistDoc.exists()) {
           setWatchlistIcon(true);
@@ -42,6 +49,7 @@ const Detail = () => {
     fetchData();
   }, [id, user, detailData.id]);
 
+  // Share content on social media method
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -57,6 +65,7 @@ const Detail = () => {
     }
   }
 
+  // Add to watchlist method
   const addToWatchList = async () => {
     if(!watchlistIcon) {
       setWatchlistIcon(true);

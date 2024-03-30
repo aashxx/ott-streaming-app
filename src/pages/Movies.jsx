@@ -6,34 +6,37 @@ import { db } from "../lib/firebase";
 
 const Movies = () => {
 
-    const [watchMovies, setWatchMovies] = useState([]);
+  // Fetch content of category - MOVIES
+  const [watchMovies, setWatchMovies] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = onSnapshot(query(collection(db, "movies")), (snapshot) => {
-            const moviesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})).filter(data => data.type === 'movie');
-            setWatchMovies(moviesData);
-        });
-
-        return unsubscribe;
-    }, []);
-
-    return (
-        <Container>
-            <h4>Watch Movies</h4>
-        <Content>
-            {
-                watchMovies.map((movie, key) => (
-                    <Wrap key={key}>
-                      {movie.id}
-                      <Link to={'/movies/detail/' + movie.id}>
-                          <img src={movie.cardImg} alt={movie.title} />
-                      </Link>
-                    </Wrap>
-                ))
-            }
-        </Content>
-        </Container>
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(collection(db, "movies")),
+      (snapshot) => {
+        const moviesData = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((data) => data.type === "movie");
+        setWatchMovies(moviesData);
+      }
     );
+
+    return unsubscribe;
+  }, []);
+
+  return (
+    <Container>
+      <h4>Watch Movies</h4>
+      <Content>
+        {watchMovies.map((movie, key) => (
+          <Wrap key={key}>
+            <Link to={"/movies/detail/" + movie.id}>
+              <img src={movie.cardImg} alt={movie.title} />
+            </Link>
+          </Wrap>
+        ))}
+      </Content>
+    </Container>
+  );
 };
 
 const Container = styled.div`

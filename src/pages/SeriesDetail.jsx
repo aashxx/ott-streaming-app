@@ -11,9 +11,13 @@ import { FaShare } from "react-icons/fa";
 
 const SeriesDetail = () => {
   
+  // Access content ID and episode ID from params
   const { id, episodeId } = useParams();
+
+  // Access content meta data
   const [detailData, setDetailData] = useState({});
 
+  // Fetch all docs in EPISODES subcollection
   const [episodes, setEpisodes] = useState([]);
 
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
@@ -24,6 +28,7 @@ const SeriesDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch episode
         const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeId));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
@@ -31,6 +36,7 @@ const SeriesDetail = () => {
           console.log("No such document exists");
         }
 
+        // Fetch all episodes
         const episodesSnapshot = await getDocs(collection(db, "movies", id, "episodes"));
         const episodesData = episodesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setEpisodes(episodesData);
@@ -48,6 +54,7 @@ const SeriesDetail = () => {
     setIsPopupOpen(true);
   }, []);
 
+  // Share episodes to social media
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -63,6 +70,7 @@ const SeriesDetail = () => {
     }
   }
 
+  // Automatically play next episode after one ends
   const navigateToNextEpisode = () => {
     setCurrentEpisodeIndex(prevIndex => prevIndex + 1);
     if (currentEpisodeIndex < episodes.length - 1) {
