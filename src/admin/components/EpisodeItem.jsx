@@ -3,8 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { db } from '../../lib/firebase';
 
-const EpisodeItem = ({ movieId, episode, style, setEpisodes }) => {
+const EpisodeItem = ({ movieId, episode, setEpisodes }) => {
 
+  // Delete episode - From ARRAY and DB 
   const deleteContent = async (id) => {
     const confirmation = confirm("Are you sure you want to delete this?");
     if(confirmation) {
@@ -16,9 +17,9 @@ const EpisodeItem = ({ movieId, episode, style, setEpisodes }) => {
   }
   
   return (
-    <Box style={{ border: `2px solid ${style === "white" ? "white" : "#090b13"}` }}>
-        <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{episode.title}</Text>
-        <Text style={{ color: `${style === "white" ? "white" : "#090b13"}` }}>{episode.type}</Text>
+    <Box>
+        <Text>{episode.title}</Text>
+        <Text>{episode.type}</Text>
         <Div>
           <Delete onClick={() => deleteContent(episode.id)}>Delete</Delete>
         </Div>
@@ -32,7 +33,7 @@ const Box = styled.div`
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  border: 2px solid #090b13;
+  border: 2px solid white;
   padding: 0 20px;
 `;
 
@@ -56,7 +57,7 @@ const Delete = styled.button`
 `;
 
 const Text = styled.h2`
-  color: #090b13;
+  color: white;
   font-size: 16px;
 `;
 

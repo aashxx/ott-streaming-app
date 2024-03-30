@@ -61,9 +61,9 @@ const UploadMovie = () => {
         releaseDate: serverTimestamp()
       }
 
-      const docRef = await addDoc(collection(db, 'movies'), docData);
+      await addDoc(collection(db, 'movies'), docData);
 
-      alert('Form submitted successfully! Document ID: ' + docRef.id);
+      alert("Content uploaded successfully");
 
       setContentUploadData({
         title: '',

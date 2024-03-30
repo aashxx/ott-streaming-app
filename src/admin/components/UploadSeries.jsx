@@ -70,7 +70,7 @@ const UploadSeries = () => {
 
         console.log(episodes);
 
-        alert('Form submitted successfully! Document ID: ' + docRef.id);
+        alert('Content uploaded successfully');
 
         setContentUploadData({
             title: '',
