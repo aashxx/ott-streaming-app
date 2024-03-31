@@ -4,6 +4,8 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
+  query,
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
@@ -36,7 +38,7 @@ const UploadItem = ({ movie, setContent }) => {
     const fetchData = async () => {
       try {
         const contentSnapshot = await getDocs(
-          collection(db, "movies", movie.id, "episodes")
+          query(collection(db, "movies", movie.id, "episodes"), orderBy("episodeNumber", "asc"))
         );
         const contentData = contentSnapshot.docs.map((doc) => ({
           id: doc.id,

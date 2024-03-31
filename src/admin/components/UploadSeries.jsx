@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../lib/firebase";
-import EpisodeItem from "./EpisodeItem";
 import Loader from "./Loader";
 
 const UploadSeries = ({ closeRef }) => {

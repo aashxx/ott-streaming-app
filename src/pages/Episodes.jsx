@@ -4,6 +4,7 @@ import {
   doc,
   getDoc,
   onSnapshot,
+  orderBy,
   query,
   setDoc,
 } from "firebase/firestore";
@@ -37,13 +38,13 @@ const Episodes = () => {
 
       // Get the EPISODES collection 
       const unsubscribe = onSnapshot(
-        query(collection(db, "movies", id, "episodes")),
+        query(collection(doc(db, "movies", id), "episodes"), orderBy("episodeNumber", "asc")),
         (snapshot) => {
           const moviesData = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           }));
-          setEpisodes(moviesData.reverse());
+          setEpisodes(moviesData);
         }
       );
 
