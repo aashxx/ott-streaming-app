@@ -23,7 +23,8 @@ const UploadMovie = ({ closeRef }) => {
     cardImg: null,
     backgroundImg: null,
     titleImg: null,
-    movieURL: null
+    movieURL: null,
+    trailerURL: null
   });
 
   // onChange handler - Meta Data
@@ -85,7 +86,8 @@ const UploadMovie = ({ closeRef }) => {
         cardImg: null,
         backgroundImg: null,
         titleImg: null,
-        movieURL: null
+        movieURL: null,
+        trailerURL: null
       });
 
     } catch (error) {
@@ -160,6 +162,16 @@ const UploadMovie = ({ closeRef }) => {
             onChange={handleFileInputChange}
             type="file"
             accept="image/*"
+            required
+            />
+        </InputGroup>
+        <InputGroup>
+            <Label>Upload Trailer</Label>
+            <FileInput
+            name="trailerURL"
+            onChange={handleFileInputChange}
+            type="file"
+            accept="video/*"
             required
             />
         </InputGroup>

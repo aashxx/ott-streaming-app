@@ -22,7 +22,8 @@ const UploadSeries = ({ closeRef }) => {
     const [contentFileInput, setContentFileInput] = useState({
         cardImg: null,
         backgroundImg: null,
-        titleImg: null
+        titleImg: null,
+        trailerURL: null
     });
 
     const handleInputChange = (e) => {
@@ -69,6 +70,7 @@ const UploadSeries = ({ closeRef }) => {
             episode.cardImg = contentUploadData.cardImg;
             episode.backgroundImg = contentUploadData.backgroundImg;
             episode.titleImg = contentUploadData.titleImg;
+            episode.trailerURL = contentUploadData.trailerURL;
             await addDoc(collection(docRef, 'episodes'), episode);
             setLoad(false);
         }));
@@ -87,7 +89,8 @@ const UploadSeries = ({ closeRef }) => {
         setContentFileInput({
             cardImg: null,
             backgroundImg: null,
-            titleImg: null
+            titleImg: null,
+            trailerURL: null
         });
 
         } catch (error) {
@@ -115,7 +118,8 @@ const UploadSeries = ({ closeRef }) => {
                     cardImg: contentUploadData.cardImg,
                     backgroundImg: contentUploadData.backgroundImg,
                     titleImg: contentUploadData.titleImg,
-                    episodeURL: episodeDownloadURL
+                    episodeURL: episodeDownloadURL,
+                    trailerURL: contentUploadData.trailerURL
                 };
 
                 setEpisodeNumber('');
@@ -201,6 +205,16 @@ const UploadSeries = ({ closeRef }) => {
                         <Label>Title Image</Label>
                         <FileInput
                         name="titleImg"
+                        onChange={handleFileInputChange}
+                        type="file"
+                        accept="image/*"
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Upload Trailer</Label>
+                        <FileInput
+                        name="trailerURL"
                         onChange={handleFileInputChange}
                         type="file"
                         accept="image/*"

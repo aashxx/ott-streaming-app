@@ -149,8 +149,8 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title} - Trailer</Description>
                   </MenuBar>
-                  <Video controls={true}>
-                    <source src="/videos/raya.mp4" type="video/mp4" />
+                  <Video controls={true} autoPlay controlsList="nodownload">
+                    <source src={detailData.trailerURL} type="video/mp4" />
                   </Video>
                 </Modal>
               )
