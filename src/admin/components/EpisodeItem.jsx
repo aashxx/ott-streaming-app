@@ -1,7 +1,8 @@
 import { deleteDoc, doc } from 'firebase/firestore';
 import React from 'react';
 import styled from 'styled-components';
-import { db } from '../../lib/firebase';
+import { db, storage } from '../../lib/firebase';
+import { deleteObject, ref } from 'firebase/storage';
 
 const EpisodeItem = ({ movie, episode, setEpisodes }) => {
 
@@ -22,7 +23,7 @@ const EpisodeItem = ({ movie, episode, setEpisodes }) => {
         <Text>{episode.title}</Text>
         <Text>{episode.type}</Text>
         <Div>
-          <Delete onClick={() => deleteContent(episode.id)}>Delete</Delete>
+          <Delete type='button' onClick={() => deleteContent(episode.id)}>Delete</Delete>
         </Div>
     </Box>
   )

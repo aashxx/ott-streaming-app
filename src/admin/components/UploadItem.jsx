@@ -6,7 +6,7 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { db, storage } from "../../lib/firebase";
 import Popup from "reactjs-popup";
@@ -19,11 +19,17 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import EpisodeItem from "./EpisodeItem";
+import Loader from "./Loader";
 
 const UploadItem = ({ movie, setContent }) => {
 
   // Stores all episodes in subcollection - FOR SERIES ONLY
   const [episodes, setEpisodes] = useState([]);
+
+  const [load, setLoad] = useState(false);
+  const [episodeLoad, setEpisodeLoad] = useState(false);
+
+  const closeRef = useRef(null);
 
   // Updates EPISODES state if new docs added to DB - FOR SERIES ONLY
   useEffect(() => {
@@ -83,6 +89,7 @@ const UploadItem = ({ movie, setContent }) => {
   const updateContent = async (event) => {
     event.preventDefault();
     try {
+      setLoad(true);
       // Uploading new file data to storage bucket - BACKGROUND.IMG, CARD.IMG, TITLE.IMG
       uploadTasks = Object.keys(contentFileInput).map(async (key) => {
         const file = contentFileInput[key];
@@ -105,7 +112,10 @@ const UploadItem = ({ movie, setContent }) => {
       };
 
       // Updating the doc in backend
-      await updateDoc(doc(db, "movies", movie.id), updatedDoc);
+      const docRef = await updateDoc(doc(db, "movies", movie.id), updatedDoc);
+      if(docRef) {
+        setLoad(false);
+      }
 
       // Condition for SERIES UPDATE - EPISODE content
       if (movie.type === "series") {
@@ -123,10 +133,10 @@ const UploadItem = ({ movie, setContent }) => {
             );
           })
         );
-
-        console.log(episodes);
       }
 
+      setLoad(false);
+      closeRef.current.click();
       alert("Content Updated successfully!");
     } catch (err) {
       console.error("Error:", err);
@@ -154,6 +164,7 @@ const UploadItem = ({ movie, setContent }) => {
   const handleAddEpisode = async (event) => {
     event.preventDefault();
     try {
+      setEpisodeLoad(true);
       // Uploading new episode file to storage bucket
       if (episodeFile) {
         const storageRef = ref(
@@ -162,6 +173,9 @@ const UploadItem = ({ movie, setContent }) => {
         );
         await uploadBytes(storageRef, episodeFile);
         const episodeDownloadURL = await getDownloadURL(storageRef);
+        if(episodeDownloadURL) {
+          setEpisodeLoad(false);
+        }
 
         // New episode meta data doc
         const updatedEpisodeUploadData = {
@@ -180,6 +194,9 @@ const UploadItem = ({ movie, setContent }) => {
           ...prevEpisodes,
           updatedEpisodeUploadData,
         ]);
+
+        setEpisodeNumber('');
+        setEpisodeFile(null);
       }
     } catch (err) {
       console.error("Error", err);
@@ -205,105 +222,120 @@ const UploadItem = ({ movie, setContent }) => {
                   onClick={() => {
                     close();
                   }}
+                  ref={closeRef}
                 >
                   <FaArrowCircleLeft />
                 </CloseBtn>
                 <Description>Edit Content</Description>
               </MenuBar>
-              <UploadForm onSubmit={updateContent} method="post">
-                <InputGroup>
-                  <Label>Title</Label>
-                  <Input
-                    name="title"
-                    value={updateContentData.title}
-                    onChange={handleContentDataChange}
-                    type="text"
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <Label>Sub Title</Label>
-                  <Input
-                    name="subTitle"
-                    value={updateContentData.subTitle}
-                    onChange={handleContentDataChange}
-                    type="text"
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <Label>Description</Label>
-                  <Textarea
-                    name="description"
-                    onChange={handleContentDataChange}
-                    value={updateContentData.description}
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <Label>Card Image</Label>
-                  <FileInput
-                    name="cardImg"
-                    type="file"
-                    onChange={handleFileChange}
-                    accept="image/*"
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <Label>Background Image</Label>
-                  <FileInput
-                    name="backgroundImg"
-                    onChange={handleFileChange}
-                    type="file"
-                    accept="image/*"
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <Label>Title Image</Label>
-                  <FileInput
-                    name="titleImg"
-                    onChange={handleFileChange}
-                    type="file"
-                    accept="image/*"
-                  />
-                </InputGroup>
-                {movie.type === "series" && (
-                  <>
-                    {episodes.map((episode, i) => (
-                      <EpisodeItem
-                        movie={movie}
-                        episode={episode}
-                        setEpisodes={setEpisodes}
-                        key={i}
+              {
+                load ? (
+                  <Loader />
+                ) : (
+                  <UploadForm onSubmit={updateContent} method="post">
+                    <InputGroup>
+                      <Label>Title</Label>
+                      <Input
+                        name="title"
+                        value={updateContentData.title}
+                        onChange={handleContentDataChange}
+                        type="text"
                       />
-                    ))}
-                    <EpisodeBox>
-                      <Heading>Add Episodes</Heading>
-                      <InputGroup>
-                        <Label>Episode No.</Label>
-                        <Input
-                          name="episodeNumber"
-                          onChange={(e) => setEpisodeNumber(e.target.value)}
-                          value={episodeNumber}
-                          type="text"
-                          placeholder="Eg: 1"
-                        />
-                      </InputGroup>
-                      <InputGroup>
-                        <Label>Upload Episode</Label>
-                        <FileInput
-                          name="episodeFiles"
-                          onChange={(e) => setEpisodeFile(e.target.files[0])}
-                          type="file"
-                          accept="video/*"
-                        />
-                      </InputGroup>
-                      <SubmitButton onClick={handleAddEpisode}>
-                        Add Episode
-                      </SubmitButton>
-                    </EpisodeBox>
-                  </>
-                )}
-                <Delete onClick={() => close()}>Cancel</Delete>
-                <SubmitButton type="submit">Update Changes</SubmitButton>
-              </UploadForm>
+                    </InputGroup>
+                    <InputGroup>
+                      <Label>Sub Title</Label>
+                      <Input
+                        name="subTitle"
+                        value={updateContentData.subTitle}
+                        onChange={handleContentDataChange}
+                        type="text"
+                      />
+                    </InputGroup>
+                    <InputGroup>
+                      <Label>Description</Label>
+                      <Textarea
+                        name="description"
+                        onChange={handleContentDataChange}
+                        value={updateContentData.description}
+                      />
+                    </InputGroup>
+                    <InputGroup>
+                      <Label>Card Image</Label>
+                      <FileInput
+                        name="cardImg"
+                        type="file"
+                        onChange={handleFileChange}
+                        accept="image/*"
+                      />
+                    </InputGroup>
+                    <InputGroup>
+                      <Label>Background Image</Label>
+                      <FileInput
+                        name="backgroundImg"
+                        onChange={handleFileChange}
+                        type="file"
+                        accept="image/*"
+                      />
+                    </InputGroup>
+                    <InputGroup>
+                      <Label>Title Image</Label>
+                      <FileInput
+                        name="titleImg"
+                        onChange={handleFileChange}
+                        type="file"
+                        accept="image/*"
+                      />
+                    </InputGroup>
+                    {movie.type === "series" && (
+                      <>
+                        {episodes.map((episode, i) => (
+                          <EpisodeItem
+                            movie={movie}
+                            episode={episode}
+                            setEpisodes={setEpisodes}
+                            key={i}
+                          />
+                        ))}
+                        <EpisodeBox>
+                          {
+                            episodeLoad ? (
+                              <Loader />
+                            ) : (
+                              <>
+                              <Heading>Add Episodes</Heading>
+                              <InputGroup>
+                                <Label>Episode No.</Label>
+                                <Input
+                                  name="episodeNumber"
+                                  onChange={(e) => setEpisodeNumber(e.target.value)}
+                                  value={episodeNumber}
+                                  type="text"
+                                  placeholder="Eg: 1"
+                                />
+                              </InputGroup>
+                              <InputGroup>
+                                <Label>Upload Episode</Label>
+                                <FileInput
+                                  name="episodeFiles"
+                                  onChange={(e) => setEpisodeFile(e.target.files[0])}
+                                  type="file"
+                                  accept="video/*"
+                                />
+                              </InputGroup>
+                              <SubmitButton onClick={handleAddEpisode}>
+                                Add Episode
+                              </SubmitButton>
+                              </>
+                            )
+                          }
+                        </EpisodeBox>
+                      </>
+                    )}
+                    <Delete onClick={() => close()}>Cancel</Delete>
+                    <SubmitButton type="submit">Update Changes</SubmitButton>
+                  </UploadForm>
+                )
+              }
             </Modal>
           )}
         </Popup>

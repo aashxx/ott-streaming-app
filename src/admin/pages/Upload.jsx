@@ -82,7 +82,7 @@ const Upload = () => {
         <Uploads>
           {
             content.map(movie => (
-              <UploadItem key={movie.id} movie={movie} setContent={setContent} style={"black"} />
+              <UploadItem key={movie.id} movie={movie} closeRef={closeRef} setContent={setContent} />
             ))
           }
         </Uploads>

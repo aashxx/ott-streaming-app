@@ -12,9 +12,8 @@ const Loader = () => {
 }
 
 const Container = styled.main`
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, .5);
   display: grid;
   place-items: center;
 `;

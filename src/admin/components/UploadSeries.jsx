@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../lib/firebase";
 import EpisodeItem from "./EpisodeItem";
@@ -11,6 +11,7 @@ const UploadSeries = ({ closeRef }) => {
     const [episodes, setEpisodes] = useState([]);
 
     const [load, setLoad] = useState(false);
+    const [episodeLoad, setEpisodeLoad]= useState(false);
 
     const [contentUploadData, setContentUploadData] = useState({
         title: '',
@@ -98,13 +99,13 @@ const UploadSeries = ({ closeRef }) => {
     const handleAddEpisode = async (event) => {
         event.preventDefault();
         try {
-            setLoad(true);
+            setEpisodeLoad(true);
             if (episodeFile) {
                 const storageRef = ref(storage, `movies/${contentUploadData.title}/episodes/${episodeNumber}.mp4`);
                 await uploadBytes(storageRef, episodeFile);
                 const episodeDownloadURL = await getDownloadURL(storageRef);
                 if(episodeDownloadURL) {
-                    setLoad(false);
+                    setEpisodeLoad(false);
                 }
             
                 const updatedEpisodeUploadData = {
@@ -128,108 +129,131 @@ const UploadSeries = ({ closeRef }) => {
         }
     };
 
+    const deleteEpisode = async (episodeTitle, episodeNo) => {
+        try {
+            const storageRef = ref(storage, `movies/${contentUploadData.title}/episodes/${episodeNo}.mp4`);
+            await deleteObject(storageRef);
+            setEpisodes(prevEpisodes => prevEpisodes.filter(episode => episode.title !== episodeTitle));
+        } catch (err) {
+            console.error("Error: ", err);
+        }
+    }
+
     return (
         <>
         {
-            load && (
+            load ? (
                 <Loader />
+            ) : (
+                <UploadForm onSubmit={handleUpload} method="post">
+                    <InputGroup>
+                        <Label>Title</Label>
+                        <Input
+                        name="title"
+                        onChange={handleInputChange}
+                        value={contentUploadData.title}
+                        type="text"
+                        placeholder="Eg: Raya"
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Sub Title</Label>
+                        <Input
+                        name="subTitle"
+                        onChange={handleInputChange}
+                        value={contentUploadData.subTitle}
+                        type="text"
+                        placeholder="Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure"
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Description</Label>
+                        <Textarea
+                        name="description"
+                        onChange={handleInputChange}
+                        value={contentUploadData.description}
+                        placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021."
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Card Image</Label>
+                        <FileInput
+                        name="cardImg"
+                        onChange={handleFileInputChange}
+                        type="file"
+                        accept="image/*"
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Background Image</Label>
+                        <FileInput
+                        name="backgroundImg"
+                        onChange={handleFileInputChange}
+                        type="file"
+                        accept="image/*"
+                        required
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Title Image</Label>
+                        <FileInput
+                        name="titleImg"
+                        onChange={handleFileInputChange}
+                        type="file"
+                        accept="image/*"
+                        required
+                        />
+                    </InputGroup>
+                    {
+                        episodes.map((episode, i) => (
+                            <EpisodeBox key={i}>
+                                <Text>{episode.title}</Text>
+                                <Text>{episode.type}</Text>
+                                <Div>
+                                    <Delete type='button' onClick={() => deleteEpisode(episode.title, episode.episodeNumber)}>Delete</Delete>
+                                </Div>
+                            </EpisodeBox>
+                        ))
+                    }
+                    <Box>
+                        {
+                            episodeLoad ? (
+                                <Loader />
+                            ) : (
+                                <>
+                                <Heading>Add Episodes</Heading>
+                                <InputGroup>
+                                <Label>Episode No.</Label>
+                                <Input
+                                    name="episodeNumber"
+                                    onChange={(e) => setEpisodeNumber(e.target.value)}
+                                    value={episodeNumber}
+                                    type="text"
+                                    placeholder="Eg: 1"
+                                />
+                                </InputGroup>
+                                <InputGroup>
+                                <Label>Upload Episode</Label>
+                                <FileInput
+                                    name="episodeFiles"
+                                    onChange={(e) => setEpisodeFile(e.target.files[0])}
+                                    type="file"
+                                    accept="video/*"
+                                />
+                                </InputGroup>
+                                <SubmitButton onClick={handleAddEpisode}>Add Episode</SubmitButton>
+                                </>
+                            )
+                        }
+                    </Box>
+                    <SubmitButton type="submit">Upload Series</SubmitButton>
+                </UploadForm>
             )
         }
-        <UploadForm onSubmit={handleUpload} method="post">
-        <InputGroup>
-            <Label>Title</Label>
-            <Input
-            name="title"
-            onChange={handleInputChange}
-            value={contentUploadData.title}
-            type="text"
-            placeholder="Eg: Raya"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Sub Title</Label>
-            <Input
-            name="subTitle"
-            onChange={handleInputChange}
-            value={contentUploadData.subTitle}
-            type="text"
-            placeholder="Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Description</Label>
-            <Textarea
-            name="description"
-            onChange={handleInputChange}
-            value={contentUploadData.description}
-            placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021."
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Card Image</Label>
-            <FileInput
-            name="cardImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Background Image</Label>
-            <FileInput
-            name="backgroundImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Title Image</Label>
-            <FileInput
-            name="titleImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        {
-            episodes.map((episode,i) => (
-                <EpisodeItem episode={episode} key={i} style={"white"} />
-            ))
-        }
-        <Box>
-            <Heading>Add Episodes</Heading>
-            <InputGroup>
-            <Label>Episode No.</Label>
-            <Input
-                name="episodeNumber"
-                onChange={(e) => setEpisodeNumber(e.target.value)}
-                value={episodeNumber}
-                type="text"
-                placeholder="Eg: 1"
-                required
-            />
-            </InputGroup>
-            <InputGroup>
-            <Label>Upload Episode</Label>
-            <FileInput
-                name="episodeFiles"
-                onChange={(e) => setEpisodeFile(e.target.files[0])}
-                type="file"
-                accept="video/*"
-                required
-            />
-            </InputGroup>
-            <SubmitButton onClick={handleAddEpisode}>Add Episode</SubmitButton>
-        </Box>
-        <SubmitButton type="submit">Upload Series</SubmitButton>
-        </UploadForm>
         </>
     );
 };
@@ -297,6 +321,40 @@ const SubmitButton = styled.button`
   &:hover {
     background-color: #0483ee;
   }
+`;
+
+const EpisodeBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: 2px solid white;
+  padding: 0 20px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Delete = styled.button`
+  font-weight: bold;
+  color: #f9f9f9;
+  background-color: #d11a2a;
+  font-size: 14px;
+  padding: 7px 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const Text = styled.h2`
+  color: white;
+  font-size: 16px;
 `;
 
 export default UploadSeries;
