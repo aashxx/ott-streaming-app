@@ -3,16 +3,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { db } from '../../lib/firebase';
 
-const EpisodeItem = ({ movieId, episode, setEpisodes }) => {
+const EpisodeItem = ({ movie, episode, setEpisodes }) => {
 
   // Delete episode - From ARRAY and DB 
   const deleteContent = async (id) => {
-    const confirmation = confirm("Are you sure you want to delete this?");
-    if(confirmation) {
-      await deleteDoc(doc(db, "movies", movieId, "episodes", id));
-      // const storageRef =  ref(storage, `movies/${movie.title}`);
-      // await deleteObject(storageRef);
+    try {
+      await deleteDoc(doc(db, "movies", movie.id, "episodes", id));
+      const storageRef =  ref(storage, `movies/${movie.title}/episodes/${episode.episodeNumber}.mp4`);
+      await deleteObject(storageRef);
       setEpisodes(prevContent => prevContent.filter(item => item.id !== id));
+    } catch (err) {
+      console.error("Error:", err);
     }
   }
   

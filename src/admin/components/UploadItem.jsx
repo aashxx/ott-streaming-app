@@ -14,6 +14,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import {
   deleteObject,
   getDownloadURL,
+  listAll,
   ref,
   uploadBytes,
 } from "firebase/storage";
@@ -137,8 +138,11 @@ const UploadItem = ({ movie, setContent }) => {
     const confirmation = confirm("Are you sure you want to delete this?");
     if (confirmation) {
       await deleteDoc(doc(db, "movies", id));
-      // const storageRef =  ref(storage, `movies/${movie.title}`);
-      // await deleteObject(storageRef);
+      const storageRef =  ref(storage, `movies/${movie.title}`);
+      const folderContents = await listAll(storageRef);
+      await Promise.all(folderContents.items.map(async (item) => {
+        await deleteObject(item);
+      }));
       setContent((prevContent) => prevContent.filter((item) => item.id !== id));
     }
   };
@@ -264,11 +268,10 @@ const UploadItem = ({ movie, setContent }) => {
                   <>
                     {episodes.map((episode, i) => (
                       <EpisodeItem
-                        movieId={movie.id}
+                        movie={movie}
                         episode={episode}
                         setEpisodes={setEpisodes}
                         key={i}
-                        style={"white"}
                       />
                     ))}
                     <EpisodeBox>

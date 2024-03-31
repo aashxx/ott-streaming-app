@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/util": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.8",
     "firebase": "^10.8.1",

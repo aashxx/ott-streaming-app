@@ -182,7 +182,7 @@ const UploadSeries = () => {
         </InputGroup>
         {
             episodes.map((episode,i) => (
-                <EpisodeItem movie={episode} key={i} style={"white"} />
+                <EpisodeItem episode={episode} key={i} style={"white"} />
             ))
         }
         <Box>
