@@ -94,7 +94,6 @@ const Detail = () => {
                 <span>Play</span>
               </Player>
             }
-            open={true}
             modal
             nested
           >
