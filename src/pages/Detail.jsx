@@ -107,7 +107,10 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={detailData.movieURL} />
+                  {/* <ShakaPlayer autoPlay src={detailData.movieURL} /> */}
+                  <Video controls={true} autoPlay={true}>
+                    <source src={detailData.movieURL} />
+                  </Video>
                   <Box>
                     <QualitySwitch >
                       1080p

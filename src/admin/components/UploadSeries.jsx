@@ -4,10 +4,13 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../lib/firebase";
 import EpisodeItem from "./EpisodeItem";
+import Loader from "./Loader";
 
-const UploadSeries = () => {
+const UploadSeries = ({ closeRef }) => {
 
     const [episodes, setEpisodes] = useState([]);
+
+    const [load, setLoad] = useState(false);
 
     const [contentUploadData, setContentUploadData] = useState({
         title: '',
@@ -42,6 +45,7 @@ const UploadSeries = () => {
     const handleUpload = async (event) => {
         event.preventDefault();
         try {
+            setLoad(true);
         const uploadTasks = Object.keys(contentFileInput).map(async (key) => {
             const file = contentFileInput[key];
             if(file) {
@@ -66,9 +70,10 @@ const UploadSeries = () => {
             episode.backgroundImg = contentUploadData.backgroundImg;
             episode.titleImg = contentUploadData.titleImg;
             await addDoc(collection(docRef, 'episodes'), episode);
+            setLoad(false);
         }));
 
-        console.log(episodes);
+        closeRef.current.click();
 
         alert('Content uploaded successfully');
 
@@ -93,10 +98,14 @@ const UploadSeries = () => {
     const handleAddEpisode = async (event) => {
         event.preventDefault();
         try {
+            setLoad(true);
             if (episodeFile) {
                 const storageRef = ref(storage, `movies/${contentUploadData.title}/episodes/${episodeNumber}.mp4`);
                 await uploadBytes(storageRef, episodeFile);
                 const episodeDownloadURL = await getDownloadURL(storageRef);
+                if(episodeDownloadURL) {
+                    setLoad(false);
+                }
             
                 const updatedEpisodeUploadData = {
                     episodeNumber: episodeNumber,
@@ -108,6 +117,9 @@ const UploadSeries = () => {
                     titleImg: contentUploadData.titleImg,
                     episodeURL: episodeDownloadURL
                 };
+
+                setEpisodeNumber('');
+                setEpisodeFile(null);
         
                 setEpisodes(prevEpisodes => [...prevEpisodes, updatedEpisodeUploadData]);
             }
@@ -117,6 +129,12 @@ const UploadSeries = () => {
     };
 
     return (
+        <>
+        {
+            load && (
+                <Loader />
+            )
+        }
         <UploadForm onSubmit={handleUpload} method="post">
         <InputGroup>
             <Label>Title</Label>
@@ -212,6 +230,7 @@ const UploadSeries = () => {
         </Box>
         <SubmitButton type="submit">Upload Series</SubmitButton>
         </UploadForm>
+        </>
     );
 };
 

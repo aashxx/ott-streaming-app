@@ -10,10 +10,13 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import UploadItem from '../components/UploadItem';
 import UploadMovie from '../components/UploadMovie';
 import UploadSeries from '../components/UploadSeries';
+import { useRef } from 'react';
 
 const Upload = () => {
 
   const [content, setContent] = useState([]);
+
+  const closeRef = useRef(null);
 
   useEffect(() => {
 
@@ -46,7 +49,7 @@ const Upload = () => {
                 close => (
                   <Modal>
                     <MenuBar>
-                      <CloseBtn onClick={() => {close(); setUploadType(null)}}>
+                      <CloseBtn onClick={() => {close(); setUploadType(null)}} ref={closeRef}>
                         <FaArrowCircleLeft />
                       </CloseBtn>
                       <Description>Upload a movie</Description>
@@ -63,12 +66,12 @@ const Upload = () => {
                     }
                     {
                       uploadType === "movie" && (
-                        <UploadMovie />
+                        <UploadMovie closeRef={closeRef} />
                       )
                     }
                     {
                       uploadType === "series" && (
-                        <UploadSeries />
+                        <UploadSeries closeRef={closeRef} />
                       )
                     }
                   </Modal>

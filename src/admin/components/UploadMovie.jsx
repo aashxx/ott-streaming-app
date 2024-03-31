@@ -4,8 +4,11 @@ import { useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../lib/firebase";
+import Loader from "./Loader";
 
-const UploadMovie = () => {
+const UploadMovie = ({ closeRef }) => {
+
+  const [load, setLoad] = useState(false);
 
   // Uploading a new movie - Meta Data
   const [contentUploadData, setContentUploadData] = useState({
@@ -44,6 +47,7 @@ const UploadMovie = () => {
   const handleUpload = async (event) => {
     event.preventDefault();
     try {
+      setLoad(true);
       uploadTasks = Object.keys(contentFileInput).map(async (key) => {
         const file = contentFileInput[key];
         if(file) {
@@ -61,7 +65,12 @@ const UploadMovie = () => {
         releaseDate: serverTimestamp()
       }
 
-      await addDoc(collection(db, 'movies'), docData);
+      const docRef = await addDoc(collection(db, 'movies'), docData);
+      if(docRef) {
+        setLoad(false);
+      }
+
+      closeRef.current.click();
 
       alert("Content uploaded successfully");
 
@@ -85,6 +94,12 @@ const UploadMovie = () => {
   }
 
   return (
+    <>
+    {
+      load && (
+        <Loader />
+      )
+    }
     <UploadForm onSubmit={handleUpload} method="post">
         <InputGroup>
             <Label>Title</Label>
@@ -160,6 +175,7 @@ const UploadMovie = () => {
         </InputGroup>
         <SubmitButton type="submit">Upload Movie</SubmitButton>
     </UploadForm>
+    </>
   );
 };
 
