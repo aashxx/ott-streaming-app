@@ -98,95 +98,96 @@ const UploadMovie = ({ closeRef }) => {
   return (
     <>
     {
-      load && (
+      load ? (
         <Loader />
+      ) : (
+        <UploadForm onSubmit={handleUpload} method="post">
+          <InputGroup>
+              <Label>Title</Label>
+              <Input
+              name="title"
+              onChange={handleInputChange}
+              value={contentUploadData.title}
+              type="text"
+              placeholder="Eg: Raya"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Sub Title</Label>
+              <Input
+              name="subTitle"
+              onChange={handleInputChange}
+              value={contentUploadData.subTitle}
+              type="text"
+              placeholder="Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Description</Label>
+              <Textarea
+              name="description"
+              onChange={handleInputChange}
+              value={contentUploadData.description}
+              placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021."
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Card Image</Label>
+              <FileInput
+              name="cardImg"
+              onChange={handleFileInputChange}
+              type="file"
+              accept="image/*"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Background Image</Label>
+              <FileInput
+              name="backgroundImg"
+              onChange={handleFileInputChange}
+              type="file"
+              accept="image/*"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Title Image</Label>
+              <FileInput
+              name="titleImg"
+              onChange={handleFileInputChange}
+              type="file"
+              accept="image/*"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Upload Trailer</Label>
+              <FileInput
+              name="trailerURL"
+              onChange={handleFileInputChange}
+              type="file"
+              accept="video/*"
+              required
+              />
+          </InputGroup>
+          <InputGroup>
+              <Label>Upload Movie</Label>
+              <FileInput
+              name="movieURL"
+              onChange={handleFileInputChange}
+              type="file"
+              accept="video/*"
+              required
+              />
+          </InputGroup>
+          <SubmitButton type="submit">Upload Movie</SubmitButton>
+      </UploadForm>
       )
     }
-    <UploadForm onSubmit={handleUpload} method="post">
-        <InputGroup>
-            <Label>Title</Label>
-            <Input
-            name="title"
-            onChange={handleInputChange}
-            value={contentUploadData.title}
-            type="text"
-            placeholder="Eg: Raya"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Sub Title</Label>
-            <Input
-            name="subTitle"
-            onChange={handleInputChange}
-            value={contentUploadData.subTitle}
-            type="text"
-            placeholder="Eg: 2021 • 1h 52m • Family, Fantasy, Animation, Action-Adventure"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Description</Label>
-            <Textarea
-            name="description"
-            onChange={handleInputChange}
-            value={contentUploadData.description}
-            placeholder="Eg: Watch with Premier Access at the same time it's in open theaters and before it's available to all Disney+ subscribers on June 4, 2021."
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Card Image</Label>
-            <FileInput
-            name="cardImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Background Image</Label>
-            <FileInput
-            name="backgroundImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Title Image</Label>
-            <FileInput
-            name="titleImg"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="image/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Upload Trailer</Label>
-            <FileInput
-            name="trailerURL"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="video/*"
-            required
-            />
-        </InputGroup>
-        <InputGroup>
-            <Label>Upload Movie</Label>
-            <FileInput
-            name="movieURL"
-            onChange={handleFileInputChange}
-            type="file"
-            accept="video/*"
-            required
-            />
-        </InputGroup>
-        <SubmitButton type="submit">Upload Movie</SubmitButton>
-    </UploadForm>
     </>
   );
 };

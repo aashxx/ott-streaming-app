@@ -217,7 +217,7 @@ const UploadSeries = ({ closeRef }) => {
                         name="trailerURL"
                         onChange={handleFileInputChange}
                         type="file"
-                        accept="image/*"
+                        accept="video/*"
                         required
                         />
                     </InputGroup>
