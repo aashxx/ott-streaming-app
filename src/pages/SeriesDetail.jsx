@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
@@ -37,7 +37,9 @@ const SeriesDetail = () => {
         }
 
         // Fetch all episodes
-        const episodesSnapshot = await getDocs(collection(db, "movies", id, "episodes"));
+        const episodesSnapshot = await getDocs(
+          query(collection(db, "movies", id, "episodes"), orderBy("episodeNumber", "asc"))
+        );
         const episodesData = episodesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setEpisodes(episodesData);
 
@@ -47,7 +49,7 @@ const SeriesDetail = () => {
     };
   
     fetchData();
-  }, [id, episodeId, detailData.id]);
+  }, [id, episodeId]);
 
   useEffect(() => {
     // Open the Popup when the component mounts
