@@ -29,7 +29,7 @@ const App = () => {
 
 const AppContent = ({ openNav, setOpenNav }) => {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const isAdmin = location.pathname.startsWith('/super-admin');
 
   return (
     <>
@@ -46,9 +46,9 @@ const AppContent = ({ openNav, setOpenNav }) => {
         <Route path='/series/:id' element={<Episodes />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/admin/dashboard' element={<Dashboard />} />
-        <Route path='/admin/upload' element={<Upload />} />
-        <Route path='/admin/users' element={<Users />} />
+        <Route path='/super-admin/dashboard' element={<Dashboard />} />
+        <Route path='/super-admin/upload' element={<Upload />} />
+        <Route path='/super-admin/users' element={<Users />} />
       </Routes>
     </>
   );

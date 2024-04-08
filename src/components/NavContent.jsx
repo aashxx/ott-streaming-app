@@ -26,7 +26,7 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
               <img src="/images/search-icon.svg" alt="SEARCH" />
                 <span>SEARCH</span>
             </Link>
-            <Link to={'/admin/dashboard'} onClick={() => setOpenNav(false)}>
+            <Link to={'/super-admin/dashboard'} onClick={() => setOpenNav(false)}>
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
               <span>DASHBOARD</span>
             </Link>
