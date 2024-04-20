@@ -15,26 +15,30 @@ import Episodes from './pages/Episodes';
 import Dashboard from './admin/pages/Dashboard';
 import Upload from './admin/pages/Upload';
 import Users from './admin/pages/Users';
+import ProtectedAdminRoute from './pages/ProtectedAdminRoute';
+import Banners from './admin/pages/Banners';
+import Editors from './admin/pages/Editors';
 
 const App = () => {
   
   const [openNav, setOpenNav] = useState(false);
+  const [adminRoute, setAdminRoute] = useState(false);
 
   return (
     <Router>
-      <AppContent openNav={openNav} setOpenNav={setOpenNav} />
+      <AppContent openNav={openNav} setOpenNav={setOpenNav} adminRoute={adminRoute} setAdminRoute={setAdminRoute} />
     </Router>
   );
 };
 
-const AppContent = ({ openNav, setOpenNav }) => {
+const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/super-admin');
 
   return (
     <>
       {!isAdmin && <MobileNav openNav={openNav} setOpenNav={setOpenNav} />}
-      {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} />}
+      {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} setAdminRoute={setAdminRoute} adminRoute={adminRoute} />}
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
@@ -46,9 +50,12 @@ const AppContent = ({ openNav, setOpenNav }) => {
         <Route path='/series/:id' element={<Episodes />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/super-admin/upload' element={<ProtectedAdminRoute adminRoute={adminRoute} setAdminRoute={setAdminRoute} />} />
         <Route path='/super-admin/dashboard' element={<Dashboard />} />
         <Route path='/super-admin/upload' element={<Upload />} />
         <Route path='/super-admin/users' element={<Users />} />
+        <Route path='/super-admin/banners' element={<Banners />} />
+        <Route path='/super-admin/editors' element={<Editors />} />
       </Routes>
     </>
   );

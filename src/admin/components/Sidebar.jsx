@@ -5,8 +5,12 @@ import styled from 'styled-components';
 import { selectUserName, selectUserPhoto, setSignOutState, setUserLoginDetails } from '../../features/user/userSlice';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
+import { MdDashboard } from "react-icons/md";
+import { FaCloudUploadAlt, FaUsers } from "react-icons/fa";
+import { CiCreditCard1 } from "react-icons/ci";
+import { GoCodeReview } from "react-icons/go";
 
-const Sidebar = () => {
+const Sidebar = ({ openSideBar, setOpenSideBar }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -42,39 +46,44 @@ const Sidebar = () => {
     }
 
     return (
-        <Nav>
-            <Logo>
-                <img src="/images/tribesflix.png" alt="Disney+" />
-            </Logo>
-            <SignOut>
-                <UserImg src={userPhoto} alt={username}  />
-                <DropDown>
-                    <span onClick={handleSignOut}>Sign Out</span>
-                </DropDown>
-            </SignOut>
-            <NavMenu>
-                <Link to="/admin/dashboard">
-                    <span>DASHBOARD</span>
-                </Link>
-                <Link to={"/admin/upload"}>
-                    <span>UPLOADS</span>
-                </Link>
-                <Link to={"/admin/users"}>
-                    <span>USERS</span>
-                </Link>
-                <Link to={"/admin/content"}>
-                    <span>SUBSCRIPTIONS</span>
-                </Link>
-                <Link to={"/admin/settings"}>
-                <span>SETTINGS</span>
-                </Link>
-        </NavMenu>
+        <Nav opensidebar={openSideBar.toString()}>
+          <Logo>
+              <img src="/images/tribesflix.png" alt="Disney+" />
+          </Logo>
+          <NavMenu>
+            <Link to="/super-admin/dashboard">
+              <MdDashboard />
+              Dashboard
+            </Link>
+            <Link to={"/super-admin/upload"}>
+              <FaCloudUploadAlt />
+              Uploads
+            </Link>
+            <Link to={"/super-admin/users"}>
+              <FaUsers />
+              Users
+            </Link>
+            <Link to={"/super-admin/banners"}>
+              <CiCreditCard1 />
+              Banners
+            </Link>
+            <Link to={"/super-admin/editors"}>
+              <GoCodeReview />
+              Editors
+            </Link>
+          </NavMenu>
+          <SignOut>
+            <UserImg src={userPhoto} alt={username}  />
+            <DropDown>
+                <span onClick={handleSignOut}>Sign Out</span>
+            </DropDown>
+          </SignOut>
         </Nav>
     )
 }
 
 const Nav = styled.nav`
-  width: 250px;
+  width: 270px;
   height: 100vh;
   background-color: #090b13;
   position: fixed;
@@ -85,6 +94,12 @@ const Nav = styled.nav`
   flex-direction: column;
   align-items: center;
   padding: 30px 15px;
+  transition: all 0.3s ease-out;
+  z-index: 50;
+
+  @media screen and (max-width: 768px) {
+    left: ${props => props.opensidebar === "true" ? '0' : '-150%'};
+  }
 `;
 
 const Logo = styled.a`
@@ -105,53 +120,29 @@ const NavMenu = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 10px;
   height: 100%;
   justify-content: center;
   margin: 0px;
-  padding: 0px;
+  padding: 0px 20px;
   position: relative;
+  width: 100%;
 
   a {
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    justify-content: center;
-    gap: 5px;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    transition: all 0.1s ease-out;
 
-    span {
-      color: rgb(249, 249, 249);
-      font-size: 13px;
-      letter-spacing: 1.42px;
-      line-height: 1.08;
-      padding: 2px 0px;
-      white-space: nowrap;
-      position: relative;
-
-      &:before {
-        background-color: rgb(249, 249, 249);
-        border-radius: 0px 0px 4px 4px;
-        bottom: -6px;
-        content: "";
-        height: 2px;
-        left: 0px;
-        opacity: 0;
-        position: absolute;
-        right: 0px;
-        transform-origin: left center;
-        transform: scaleX(0);
-        transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-        visibility: hidden;
-        width: auto;
-      }
-    }
-
-    &:hover {
-      span:before {
-        transform: scaleX(1);
-        visibility: visible;
-        opacity: 1 !important;
-      }
+    &:active {
+      background-color: rgba(0,115,255,0.1);
+      color: blue;
     }
   }
 

@@ -1,8 +1,30 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../lib/firebase';
+import UserItem from '../components/UserItem';
 
 const Users = () => {
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersSnapshot = await getDocs(collection(db, "users"));
+        const usersData = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setUsers(usersData);
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <Layout>
         <Container>
@@ -10,10 +32,14 @@ const Users = () => {
                 <Heading>
                     Current Subscribers & Users
                 </Heading>
-                <NewUpload>
-                    New
-                </NewUpload>
             </Box>
+            <CurrentUsers>
+              {
+                users.map(user => (
+                  <UserItem key={user.id} user={user} setUsers={setUsers} />
+                ))
+              }
+            </CurrentUsers>
         </Container>
     </Layout>
   )
@@ -24,6 +50,10 @@ const Container = styled.div`
   padding-left: 300px;
   height: 100vh;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 const Box = styled.div`
@@ -33,26 +63,21 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Heading = styled.h2`
-  color: #090b13;
+const CurrentUsers = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 10px;
+  height: 80vh;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const NewUpload = styled.button`
-    font-weight: bold;
-    color: #f9f9f9;
-    background-color: #0063e5;
-    font-size: 18px;
-    padding: 5px 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-
-    &:hover {
-    background-color: #0483ee;
-    }
+const Heading = styled.h2`
+  color: #090b13;
 `;
 
 export default Users;

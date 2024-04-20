@@ -31,6 +31,7 @@ const Login = () => {
             name: result.user.displayName,
             email: result.user.email,
             photo: result.user.photoURL,
+            type: "user",
             createdAt: serverTimestamp()
           });
         }

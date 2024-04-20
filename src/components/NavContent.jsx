@@ -1,8 +1,26 @@
+import { doc, getDoc } from "firebase/firestore";
 import React from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { db } from "../lib/firebase";
+import { useState } from "react";
 
-const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
+const NavContent = ({ userPhoto, username, userId, handleSignOut, setOpenNav, adminRoute, setAdminRoute }) => {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userDoc = await getDoc(doc(db, 'users', userId));
+      if(userDoc.exists()) {
+        if(userDoc.data().type === "admin") {
+          setAdminRoute(true);
+        }
+      }
+    }
+
+    fetchData();
+  }, [])
+
   return (
     <>
       <NavMenu>
@@ -26,10 +44,14 @@ const NavContent = ({ userPhoto, username, handleSignOut, setOpenNav }) => {
               <img src="/images/search-icon.svg" alt="SEARCH" />
                 <span>SEARCH</span>
             </Link>
-            <Link to={'/super-admin/dashboard'} onClick={() => setOpenNav(false)}>
-              <img src="/images/original-icon.svg" alt="ORIGINALS" />
-              <span>DASHBOARD</span>
-            </Link>
+            {
+              adminRoute && (
+                <Link to={'/super-admin/dashboard'} onClick={() => setOpenNav(false)}>
+                  <img src="/images/original-icon.svg" alt="ORIGINALS" />
+                  <span>DASHBOARD</span>
+                </Link>
+              )
+            }
       </NavMenu>
       <SignOut>
         <UserImg src={userPhoto} alt={username} />

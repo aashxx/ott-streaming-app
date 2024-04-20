@@ -96,6 +96,10 @@ const Container = styled.div`
   padding-left: 300px;
   height: 100vh;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 const Box = styled.div`

@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithPopup, updateProfile } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +30,7 @@ const Signup = () => {
             name: result.user.displayName,
             email: result.user.email,
             photo: result.user.photoURL,
+            type: "user",
             createdAt: serverTimestamp()
           });
         }
@@ -62,6 +63,7 @@ const Signup = () => {
             name: editUser.displayName,
             email: editUser.email,
             photo: editUser.photoURL,
+            type: "user",
             createdAt: serverTimestamp()
           });
         }

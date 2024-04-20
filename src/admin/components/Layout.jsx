@@ -1,43 +1,45 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import { styled } from 'styled-components';
+import { HiBars3BottomLeft } from "react-icons/hi2";
+import { useState } from 'react';
 
 const Layout = ({ children }) => {
+
+  const [openSideBar, setOpenSideBar] = useState(false);
+
   return (
-    <>
     <Div>
-        <Sidebar />
-        <main>
-            { children }
-        </main>
+      <Sidebar openSideBar={openSideBar} setOpenSideBar={setOpenSideBar} />
+      <MobileNav onClick={() => setOpenSideBar(!openSideBar)}>
+        <HiBars3BottomLeft />
+      </MobileNav>
+      <main>
+          { children }
+      </main>
     </Div>
-    <Mobile>
-      Not supported in mobile devices
-    </Mobile>
-    </>
   )
 }
 
 const Div = styled.div`
   background-color: white;
   width: 100%;
-
-  @media screen and (max-width: 810px) {
-    display: none;
-  }
 `;
 
-const Mobile = styled.div`
+const MobileNav = styled.button`
+  color: black;
+  border-radius: 50px;
+  font-size: 25px;
   display: none;
+  position: fixed;
+  top: 70px;
+  left: 30px;
+  border: none;
+  outline: none;
+  z-index: 99;
 
-  @media screen and (max-width: 810px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    color: white;
-    font-weight: bold;
+  @media screen and (max-width: 768px) {
+    display: block;
   }
 `;
 

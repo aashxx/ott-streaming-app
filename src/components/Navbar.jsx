@@ -4,17 +4,18 @@ import { auth } from "../lib/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaXmark } from "react-icons/fa6";
-import { selectUserName, selectUserPhoto, setSignOutState, setUserLoginDetails } from "../features/user/userSlice";
+import { selectUID, selectUserName, selectUserPhoto, setSignOutState, setUserLoginDetails } from "../features/user/userSlice";
 import NavContent from "./NavContent";
 import { onAuthStateChanged } from "firebase/auth";
 
-const Navbar = ({ openNav, setOpenNav }) => {
+const Navbar = ({ openNav, setOpenNav, adminRoute, setAdminRoute }) => {
 
   // Accessing logged in user credentials from store
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const username = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+  const userId = useSelector(selectUID);
 
   // Signout method
   const handleSignOut = async () => {
@@ -48,16 +49,16 @@ const Navbar = ({ openNav, setOpenNav }) => {
   }
 
   return (
-    <Nav opennav={openNav}>
+    <Nav opennav={openNav.toString()}>
         <XMark onClick={() => setOpenNav(false)}>
           <FaXmark />
         </XMark>
         <Logo>
-            <img src="/images/tribesflix.png" alt="Disney+" />
+            <img src="/images/tribesflix.png" alt="TribesFlix" />
         </Logo>
         {
           username ? (
-            <NavContent setOpenNav={setOpenNav} userPhoto={userPhoto} username={username} handleSignOut={handleSignOut} />
+            <NavContent setOpenNav={setOpenNav} userPhoto={userPhoto} username={username} userId={userId} handleSignOut={handleSignOut} adminRoute={adminRoute} setAdminRoute={setAdminRoute} />
           ) : (
             <Login href={'/signup'}>Signup</Login>
           )
@@ -85,7 +86,7 @@ const Nav = styled.nav`
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    top: ${props => props.opennav ? '0' : '-150%'};
+    top: ${props => props.opennav === "true" ? '0' : '-150%'};
     transition: all 0.3s ease-out;
   }
 `;
