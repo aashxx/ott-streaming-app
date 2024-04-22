@@ -18,6 +18,8 @@ import Users from './admin/pages/Users';
 import ProtectedAdminRoute from './pages/ProtectedAdminRoute';
 import Banners from './admin/pages/Banners';
 import Editors from './admin/pages/Editors';
+import Footer from './components/Footer';
+import Splash from './components/Splash';
 
 const App = () => {
   
@@ -39,6 +41,7 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
     <>
       {!isAdmin && <MobileNav openNav={openNav} setOpenNav={setOpenNav} />}
       {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} setAdminRoute={setAdminRoute} adminRoute={adminRoute} />}
+      <Splash />
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
@@ -57,6 +60,7 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
         <Route path='/super-admin/banners' element={<Banners />} />
         <Route path='/super-admin/editors' element={<Editors />} />
       </Routes>
+      {!isAdmin && <Footer />}
     </>
   );
 };
