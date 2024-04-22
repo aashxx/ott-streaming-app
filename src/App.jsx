@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -15,14 +15,12 @@ import Episodes from './pages/Episodes';
 import Dashboard from './admin/pages/Dashboard';
 import Upload from './admin/pages/Upload';
 import Users from './admin/pages/Users';
-import ProtectedAdminRoute from './pages/ProtectedAdminRoute';
 import Banners from './admin/pages/Banners';
 import Editors from './admin/pages/Editors';
 import Footer from './components/Footer';
 import Splash from './components/Splash';
 
 const App = () => {
-  
   const [openNav, setOpenNav] = useState(false);
   const [adminRoute, setAdminRoute] = useState(false);
 
@@ -36,6 +34,11 @@ const App = () => {
 const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/super-admin');
+
+  // Authorization check for admin routes
+  if (isAdmin && !adminRoute) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>
@@ -53,12 +56,15 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
         <Route path='/series/:id' element={<Episodes />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/super-admin/upload' element={<ProtectedAdminRoute adminRoute={adminRoute} setAdminRoute={setAdminRoute} />} />
-        <Route path='/super-admin/dashboard' element={<Dashboard />} />
-        <Route path='/super-admin/upload' element={<Upload />} />
-        <Route path='/super-admin/users' element={<Users />} />
-        <Route path='/super-admin/banners' element={<Banners />} />
-        <Route path='/super-admin/editors' element={<Editors />} />
+        {adminRoute && isAdmin && (
+          <>
+            <Route path='/super-admin/dashboard' element={<Dashboard />} />
+            <Route path='/super-admin/upload' element={<Upload />} />
+            <Route path='/super-admin/users' element={<Users />} />
+            <Route path='/super-admin/banners' element={<Banners />} />
+            <Route path='/super-admin/editors' element={<Editors />} />
+          </>
+        )}
       </Routes>
       {!isAdmin && <Footer />}
     </>
