@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const handleVideoLoaded = (event) => {
-    event.target.playbackRate = 2;
-  };
-
 const Splash = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 4500);
+    }, 8500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -21,7 +17,7 @@ const Splash = () => {
       {showSplash && (
         <SplashContainer>
           <VideoContainer>
-            <Video autoPlay muted loop onLoadedData={handleVideoLoaded}>
+            <Video autoPlay muted loop>
               <source src="/videos/splash.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </Video>
