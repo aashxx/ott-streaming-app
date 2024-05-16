@@ -8,8 +8,8 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
 import { FaPlus, FaShare, FaCheck } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { selectUID } from "../features/user/userSlice";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Detail = () => {
   
@@ -23,7 +23,7 @@ const Detail = () => {
   const [watchlistIcon, setWatchlistIcon] = useState(false);
 
   // Accessing user creds
-  const user = useSelector(selectUID);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +37,7 @@ const Detail = () => {
         }
   
         // Checking if added to watchlist or not
-        const watchlistDoc = await getDoc(doc(db, "users", user, "watchlist", detailData.id));
+        const watchlistDoc = await getDoc(doc(db, "users", user.uid, "watchlist", detailData.id));
         if (watchlistDoc.exists()) {
           setWatchlistIcon(true);
         }
@@ -69,10 +69,10 @@ const Detail = () => {
   const addToWatchList = async () => {
     if(!watchlistIcon) {
       setWatchlistIcon(true);
-      await setDoc(doc(collection(db, "users", user, "watchlist"), detailData.id), detailData);
+      await setDoc(doc(collection(db, "users", user.uid, "watchlist"), detailData.id), detailData);
     } else {
       setWatchlistIcon(false);
-      await deleteDoc(doc(db, "users", user, "watchlist", detailData.id));
+      await deleteDoc(doc(db, "users", user.uid, "watchlist", detailData.id));
     }
   }
 

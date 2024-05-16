@@ -19,6 +19,8 @@ import Banners from './admin/pages/Banners';
 import Editors from './admin/pages/Editors';
 import Footer from './components/Footer';
 import Splash from './components/Splash';
+import { Toaster } from 'react-hot-toast';
+import AuthState from './contexts/AuthContext';
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -40,8 +42,18 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
     return <Navigate to="/" />;
   }
 
+  // Function to determine if the current route is the login or signup page
+  const isAuthPage = () => {
+    return ['/signup', '/'].includes(location.pathname);
+  };
+
+  // Function to determine if the current route is the detail page
+  const isDetailPage = () => {
+    return location.pathname.includes('/detail/');
+  };
+
   return (
-    <>
+    <AuthState>
       {!isAdmin && <MobileNav openNav={openNav} setOpenNav={setOpenNav} />}
       {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} setAdminRoute={setAdminRoute} adminRoute={adminRoute} />}
       <Splash />
@@ -66,8 +78,10 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
           </>
         )}
       </Routes>
-      {!isAdmin && <Footer />}
-    </>
+      <Toaster position="bottom-right" reverseOrder={false} />
+      {/* Conditionally render the footer based on current route */}
+      {!isAdmin && !isAuthPage() && !isDetailPage() && <Footer />}
+    </AuthState>
   );
 };
 

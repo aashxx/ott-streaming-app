@@ -5,19 +5,21 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { useSelector } from "react-redux";
 import { selectUID } from "../features/user/userSlice";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Watchlist = () => {
 
   // Fetches content present in user's watchlist
   const [watchlist, setWatchlist] = useState([]);
 
-  const user = useSelector(selectUID);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const unsubscribe = await getDocs(
-          collection(doc(db, "users", user), "watchlist")
+          collection(doc(db, "users", user.uid), "watchlist")
         );
         const watchlistData = unsubscribe.docs.map((doc) => ({
           id: doc.id,
