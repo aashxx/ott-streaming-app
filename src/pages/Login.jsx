@@ -1,11 +1,18 @@
-import { useContext} from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from '../contexts/AuthContext';
 
 const Login = () => {
 
-  const { manualLog, setManualLog, handleGoogleLogin, handleManualLogin } = useContext(AuthContext);
+  const { user, manualLog, setManualLog, handleGoogleLogin, handleManualLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(user) {
+      navigate('/home');
+    }
+  }, []);
 
   return (
     <Container>
@@ -118,6 +125,7 @@ const SignUp = styled.button`
   align-items: center;
   justify-content: center;
   gap: 25px;
+  cursor: pointer;
 
   &:hover {
     background-color: #0483ee;

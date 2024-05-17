@@ -118,6 +118,7 @@ const SignUp = styled.button`
   align-items: center;
   justify-content: center;
   gap: 25px;
+  cursor: pointer;
 
   &:hover {
     background-color: #0483ee;

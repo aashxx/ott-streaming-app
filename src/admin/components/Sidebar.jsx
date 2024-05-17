@@ -35,10 +35,16 @@ const Sidebar = ({ openSideBar, setOpenSideBar }) => {
           <NavMenu>
             {
               isEditor ? (
+                <>
                 <Link to={"/super-admin/upload"}>
                   <FaCloudUploadAlt />
                   Uploads
                 </Link>
+                <Link to={"/super-admin/banners"}>
+                  <CiCreditCard1 />
+                  Banners
+                </Link>
+                </>
               ) : (
                 <>
                 <Link to="/super-admin/dashboard">
@@ -66,10 +72,9 @@ const Sidebar = ({ openSideBar, setOpenSideBar }) => {
             }
           </NavMenu>
           <SignOut>
-            <UserImg src={user.photo} alt={user.name}  />
-            <DropDown>
-                <span onClick={handleSignOut}>Sign Out</span>
-            </DropDown>
+            <Link to={'/profile'}>
+              <UserImg src={user.photo} alt={user.name} />
+            </Link>
           </SignOut>
         </Nav>
     )

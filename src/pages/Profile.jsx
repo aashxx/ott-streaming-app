@@ -29,12 +29,12 @@ const Profile = () => {
                     </ProfileData>
                 </AccountContainer>
                 <ButtonContainer>
-                    <Button onClick={handleSignOut}>
-                        Sign Out
-                    </Button>
-                    <Button>
-                        Edit Profile
-                    </Button>
+                  <Button onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
+                  <Button>
+                    Edit Profile
+                  </Button>
                 </ButtonContainer>
             </section>
             <section>
