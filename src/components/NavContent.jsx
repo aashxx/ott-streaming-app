@@ -64,10 +64,9 @@ const NavContent = ({ setOpenNav, adminRoute, setAdminRoute }) => {
             }
       </NavMenu>
       <SignOut>
-        <UserImg src={user.photo} alt={user.name} />
-        <DropDown>
-          <span onClick={handleSignOut}>Sign Out</span>
-        </DropDown>
+        <Link to={'/profile'}>
+          <UserImg src={user.photo} alt={user.name} />
+        </Link>
       </SignOut>
     </>
   );

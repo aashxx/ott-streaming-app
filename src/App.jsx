@@ -21,6 +21,7 @@ import Footer from './components/Footer';
 import Splash from './components/Splash';
 import { Toaster } from 'react-hot-toast';
 import AuthState from './contexts/AuthContext';
+import Profile from './pages/Profile';
 
 const App = () => {
   const [openNav, setOpenNav] = useState(false);
@@ -56,7 +57,7 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
     <AuthState>
       {!isAdmin && <MobileNav openNav={openNav} setOpenNav={setOpenNav} />}
       {!isAdmin && <Navbar openNav={openNav} setOpenNav={setOpenNav} setAdminRoute={setAdminRoute} adminRoute={adminRoute} />}
-      <Splash />
+      {/* <Splash /> */}
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
@@ -68,6 +69,7 @@ const AppContent = ({ openNav, setOpenNav, setAdminRoute, adminRoute }) => {
         <Route path='/series/:id' element={<Episodes />} />
         <Route path='/watchlist' element={<Watchlist />} />
         <Route path='/search' element={<Search />} />
+        <Route path='/profile' element={<Profile />} />
         {adminRoute && isAdmin && (
           <>
             <Route path='/super-admin/dashboard' element={<Dashboard />} />

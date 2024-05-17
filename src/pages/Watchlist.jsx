@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import { useSelector } from "react-redux";
-import { selectUID } from "../features/user/userSlice";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
