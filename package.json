@@ -30,7 +30,9 @@
     "reactjs-popup": "^2.0.6",
     "shaka-player-react": "^1.1.5",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "video-react": "^0.16.0",
+    "video.js": "^8.16.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

@@ -1,43 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../lib/firebase";
 import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
-import { FaArrowCircleLeft } from "react-icons/fa";
-import ShakaPlayer from 'shaka-player-react';
-import 'shaka-player-react/dist/controls.css';
-import { FaPlus, FaShare, FaCheck } from "react-icons/fa";
-import { useContext } from "react";
+import { FaArrowCircleLeft, FaPlus, FaShare, FaCheck } from "react-icons/fa";
 import { AuthContext } from "../contexts/AuthContext";
+import { Player } from "video-react";
+import "video-react/dist/video-react.css";
 
 const Detail = () => {
-  
-  // Accessing ID from the param
   const { id } = useParams();
-
-  // Accessing the content meta data associated with ID
   const [detailData, setDetailData] = useState({});
-
-  // Conditional check - If content is added to watchlist or not
   const [watchlistIcon, setWatchlistIcon] = useState(false);
-
-  // Accessing user creds
+  const [movie, setMovie] = useState('');
+  const [videoKey, setVideoKey] = useState(Date.now());
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetching that content doc associated with the ID
         const movieDoc = await getDoc(doc(db, "movies", id));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
+          setMovie(movieDoc.data().movieURL); // Set initial movie URL
         } else {
           console.log("No such document exists");
         }
-  
-        // Checking if added to watchlist or not
-        const watchlistDoc = await getDoc(doc(db, "users", user.uid, "watchlist", detailData.id));
+
+        const watchlistDoc = await getDoc(doc(db, "users", user.uid, "watchlist", id));
         if (watchlistDoc.exists()) {
           setWatchlistIcon(true);
         }
@@ -45,11 +36,10 @@ const Detail = () => {
         console.error("Error fetching data:", error);
       }
     };
-  
-    fetchData();
-  }, [id, user, detailData.id]);
 
-  // Share content on social media method
+    fetchData();
+  }, [id, user]);
+
   const handleShare = async () => {
     if (navigator.share) {
       try {
@@ -65,7 +55,6 @@ const Detail = () => {
     }
   }
 
-  // Add to watchlist method
   const addToWatchList = async () => {
     if(!watchlistIcon) {
       setWatchlistIcon(true);
@@ -75,6 +64,19 @@ const Detail = () => {
       await deleteDoc(doc(db, "users", user.uid, "watchlist", detailData.id));
     }
   }
+
+  const getTranscodedUrl = (quality) => {
+    const qualityMapping = {
+      '1080p': 'f_auto,q_100',
+      '720p': 'f_auto,q_75',
+      '480p': 'f_auto,q_50',
+      '240p': 'f_auto,q_20'
+    };
+    const transformation = qualityMapping[quality];
+    const newUrl = detailData.movieURL.replace('/upload/', `/upload/${transformation}/`);
+    setMovie(newUrl);
+    setVideoKey(Date.now()); // Change video key to force re-render
+  };
 
   return (
     <Container>
@@ -89,10 +91,10 @@ const Detail = () => {
         <Controls>
           <Popup
             trigger={
-              <Player>
+              <PlayerButton>
                 <img src="/images/play-icon-black.png" alt="" />
                 <span>Play</span>
-              </Player>
+              </PlayerButton>
             }
             modal
             nested
@@ -106,22 +108,25 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  {/* <ShakaPlayer autoPlay src={detailData.movieURL} /> */}
-                  <Video controls={true} autoPlay={true} controlsList="nodownload">
-                    <source src={detailData.movieURL} />
-                  </Video>
+                  <Player
+                    key={videoKey}
+                    playsInline
+                    src={movie}
+                    autoPlay
+                    fluid
+                  />
                   <Box>
-                    <QualitySwitch >
+                    <QualitySwitch onClick={() => getTranscodedUrl('1080p')}>
                       1080p
                     </QualitySwitch>
-                    <QualitySwitch>
+                    <QualitySwitch onClick={() => getTranscodedUrl('720p')}>
                       720p
                     </QualitySwitch>
-                    <QualitySwitch>
+                    <QualitySwitch onClick={() => getTranscodedUrl('480p')}>
                       480p
                     </QualitySwitch>
-                    <QualitySwitch>
-                      360p
+                    <QualitySwitch onClick={() => getTranscodedUrl('240p')}>
+                      240p
                     </QualitySwitch>
                   </Box>
                 </Modal>
@@ -147,9 +152,12 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title} - Trailer</Description>
                   </MenuBar>
-                  <Video controls={true} autoPlay controlsList="nodownload">
-                    <source src={detailData.trailerURL} type="video/mp4" />
-                  </Video>
+                  <Player
+                    playsInline
+                    src={detailData.trailerURL}
+                    autoPlay
+                    fluid
+                  />
                 </Modal>
               )
             }
@@ -250,7 +258,7 @@ const Controls = styled.div`
   min-height: 56px;
 `;
 
-const Player = styled.button`
+const PlayerButton = styled.button`
   font-size: 15px;
   margin: 0px 22px 0px 0px;
   padding: 0px 24px;
@@ -263,7 +271,7 @@ const Player = styled.button`
   letter-spacing: 1.8px;
   text-align: center;
   text-transform: uppercase;
-  background: rgb (249, 249, 249);
+  background: rgb(249, 249, 249);
   border: none;
   color: rgb(0, 0, 0);
 
@@ -287,7 +295,7 @@ const Player = styled.button`
   }
 `;
 
-const Trailer = styled(Player)`
+const Trailer = styled(PlayerButton)`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgb(249, 249, 249);
   color: rgb(249, 249, 249);
@@ -323,12 +331,6 @@ const CloseBtn = styled.button`
   outline: none;
   color: rgb(249, 249, 249);
   font-size: 22px;
-`;
-
-const Video = styled.video`
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 6px;
 `;
 
 const AddList = styled.button`
