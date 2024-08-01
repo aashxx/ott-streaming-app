@@ -5,9 +5,10 @@ import { db } from "../lib/firebase";
 import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
 import { FaShare } from "react-icons/fa";
+import { Player } from "video-react";
+import "video-react/dist/video-react.css";
 
 const SeriesDetail = () => {
   
@@ -19,6 +20,8 @@ const SeriesDetail = () => {
 
   // Fetch all docs in EPISODES subcollection
   const [episodes, setEpisodes] = useState([]);
+  const [movie, setMovie] = useState('');
+  const [videoKey, setVideoKey] = useState(Date.now());
 
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   let navigate = useNavigate();
@@ -32,6 +35,7 @@ const SeriesDetail = () => {
         const movieDoc = await getDoc(doc(db, "movies", id, "episodes", episodeId));
         if (movieDoc.exists()) {
           setDetailData({ id: movieDoc.id, ...movieDoc.data() });
+          setMovie(movieDoc.data().episodeURL);
         } else {
           console.log("No such document exists");
         }
@@ -72,6 +76,19 @@ const SeriesDetail = () => {
     }
   }
 
+  const getTranscodedUrl = (quality) => {
+    const qualityMapping = {
+      '1080p': 'f_auto,q_100',
+      '720p': 'f_auto,q_75',
+      '480p': 'f_auto,q_50',
+      '240p': 'f_auto,q_20'
+    };
+    const transformation = qualityMapping[quality];
+    const newUrl = detailData.episodeURL.replace('/upload/', `/upload/${transformation}/`);
+    setMovie(newUrl);
+    setVideoKey(Date.now()); 
+  };
+
   // Automatically play next episode after one ends
   const navigateToNextEpisode = () => {
     setCurrentEpisodeIndex(prevIndex => prevIndex + 1);
@@ -94,10 +111,10 @@ const SeriesDetail = () => {
         <Controls>
           <Popup
             trigger={
-              <Player>
+              <PlayerButton>
                 <img src="/images/play-icon-black.png" alt="" />
                 <span>Play</span>
-              </Player>
+              </PlayerButton>
             }
             open={isPopupOpen}
             onClose={() => setIsPopupOpen(false)}
@@ -113,19 +130,26 @@ const SeriesDetail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <ShakaPlayer autoPlay src={detailData.episodeURL} onEnded={navigateToNextEpisode} />
+                  <Player
+                    key={videoKey}
+                    playsInline
+                    src={movie}
+                    autoPlay
+                    fluid
+                    onEnded={navigateToNextEpisode}
+                  />
                   <Box>
-                    <QualitySwitch >
+                    <QualitySwitch onClick={() => getTranscodedUrl('1080p')}>
                       1080p
                     </QualitySwitch>
-                    <QualitySwitch>
+                    <QualitySwitch onClick={() => getTranscodedUrl('720p')}>
                       720p
                     </QualitySwitch>
-                    <QualitySwitch>
+                    <QualitySwitch onClick={() => getTranscodedUrl('480p')}>
                       480p
                     </QualitySwitch>
-                    <QualitySwitch>
-                      360p
+                    <QualitySwitch onClick={() => getTranscodedUrl('240p')}>
+                      240p
                     </QualitySwitch>
                   </Box>
                 </Modal>
@@ -251,7 +275,7 @@ const Controls = styled.div`
   min-height: 56px;
 `;
 
-const Player = styled.button`
+const PlayerButton = styled.button`
   font-size: 15px;
   margin: 0px 22px 0px 0px;
   padding: 0px 24px;
@@ -288,7 +312,7 @@ const Player = styled.button`
   }
 `;
 
-const Trailer = styled(Player)`
+const Trailer = styled(PlayerButton)`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgb(249, 249, 249);
   color: rgb(249, 249, 249);

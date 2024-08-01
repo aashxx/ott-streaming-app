@@ -75,7 +75,7 @@ const Detail = () => {
     const transformation = qualityMapping[quality];
     const newUrl = detailData.movieURL.replace('/upload/', `/upload/${transformation}/`);
     setMovie(newUrl);
-    setVideoKey(Date.now()); // Change video key to force re-render
+    setVideoKey(Date.now()); 
   };
 
   return (

@@ -141,15 +141,15 @@ const UploadSeries = ({ closeRef }) => {
         }
     };
 
-    const deleteEpisode = async (episodeTitle, episodeNo) => {
-        try {
-            const storageRef = ref(storage, `movies/${contentUploadData.title}/episodes/${episodeNo}.mp4`);
-            await deleteObject(storageRef);
-            setEpisodes(prevEpisodes => prevEpisodes.filter(episode => episode.title !== episodeTitle));
-        } catch (err) {
-            console.error("Error: ", err);
-        }
-    }
+    // const deleteEpisode = async (episodeTitle, episodeNo) => {
+    //     try {
+    //         const storageRef = ref(storage, `movies/${contentUploadData.title}/episodes/${episodeNo}.mp4`);
+    //         await deleteObject(storageRef);
+    //         setEpisodes(prevEpisodes => prevEpisodes.filter(episode => episode.title !== episodeTitle));
+    //     } catch (err) {
+    //         console.error("Error: ", err);
+    //     }
+    // }
 
     return (
         <>
@@ -235,9 +235,9 @@ const UploadSeries = ({ closeRef }) => {
                             <EpisodeBox key={i}>
                                 <Text>{episode.title}</Text>
                                 <Text>{episode.type}</Text>
-                                <Div>
+                                {/* <Div>
                                     <Delete type='button' onClick={() => deleteEpisode(episode.title, episode.episodeNumber)}>Delete</Delete>
-                                </Div>
+                                </Div> */}
                             </EpisodeBox>
                         ))
                     }
