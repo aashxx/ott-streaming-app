@@ -6,8 +6,8 @@ import { collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import Popup from "reactjs-popup";
 import { FaArrowCircleLeft, FaPlus, FaShare, FaCheck } from "react-icons/fa";
 import { AuthContext } from "../contexts/AuthContext";
-import { Player } from "video-react";
-import "video-react/dist/video-react.css";
+import Plyr from 'plyr-react';
+import "plyr-react/plyr.css";
 
 const Detail = () => {
   const { id } = useParams();
@@ -53,17 +53,17 @@ const Detail = () => {
     } else {
       console.log("Web Share API not supported");
     }
-  }
+  };
 
   const addToWatchList = async () => {
-    if(!watchlistIcon) {
+    if (!watchlistIcon) {
       setWatchlistIcon(true);
       await setDoc(doc(collection(db, "users", user.uid, "watchlist"), detailData.id), detailData);
     } else {
       setWatchlistIcon(false);
       await deleteDoc(doc(db, "users", user.uid, "watchlist", detailData.id));
     }
-  }
+  };
 
   const getTranscodedUrl = (quality) => {
     const qualityMapping = {
@@ -108,12 +108,21 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title}</Description>
                   </MenuBar>
-                  <Player
-                    key={videoKey}
-                    playsInline
-                    src={movie}
-                    autoPlay
-                    fluid
+                  <Plyr
+                    source={{
+                      type: 'video',
+                      sources: [
+                        {
+                          src: movie,
+                          type: 'video/mp4',
+                        },
+                      ],
+                    }}
+                    options={{
+                      autoplay: true,
+                      controls: ['rewind','play', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen', 'pip'],
+                      settings: ['speed']
+                    }}
                   />
                   <Box>
                     <QualitySwitch onClick={() => getTranscodedUrl('1080p')}>
@@ -152,11 +161,21 @@ const Detail = () => {
                     </CloseBtn>
                     <Description>{detailData.title} - Trailer</Description>
                   </MenuBar>
-                  <Player
-                    playsInline
-                    src={detailData.trailerURL}
-                    autoPlay
-                    fluid
+                  <Plyr
+                    source={{
+                      type: 'video',
+                      sources: [
+                        {
+                          src: detailData.trailerURL,
+                          type: 'video/mp4',
+                        },
+                      ],
+                    }}
+                    options={{
+                      autoplay: true,
+                      controls: ['rewind','play', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen', 'pip'],
+                      settings: ['speed']
+                    }}
                   />
                 </Modal>
               )
@@ -395,6 +414,15 @@ const SubTitle = styled.div`
 
   @media (max-width: 768px) {
     font-size: 12px;
+  }
+`;
+
+const StyledPlyr = styled.video`
+  width: 100%;
+  height: 400px; // Adjust the height as needed
+
+  @media (max-width: 768px) {
+    height: 300px; // Adjust for smaller screens
   }
 `;
 
